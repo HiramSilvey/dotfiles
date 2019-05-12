@@ -11,6 +11,7 @@
 ;; -----------------------------------------------------------------------------
 
 (require 'package)
+(require 'cc-mode)
 
 ;; Start the server for emacsclient
 (server-start)
@@ -65,6 +66,12 @@ There are two things you can do about this warning:
 ;; -----------------------------------------------------------------------------
 
 (package-install 'company)
+
+;; Install specific language backends
+(package-install 'company-c-headers)
+(package-install 'company-go)
+
+;; Enable globally
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; -----------------------------------------------------------------------------
@@ -72,6 +79,8 @@ There are two things you can do about this warning:
 ;; -----------------------------------------------------------------------------
 
 (package-install 'yasnippet)
+
+;; Enable globally
 (yas-global-mode 1)
 
 ;; -----------------------------------------------------------------------------
@@ -79,6 +88,8 @@ There are two things you can do about this warning:
 ;; -----------------------------------------------------------------------------
 
 (package-install 'flycheck)
+
+;; Enable globally
 (global-flycheck-mode)
 
 ;; OSX-specific fix for flycheck
@@ -96,6 +107,12 @@ There are two things you can do about this warning:
 
 (package-install 'smart-tabs-mode)
 
+;; Set the default C indentation to 2 columns
+(setq-default c-basic-offset 2)
+
+;; Disable tabs globally (spaces only)
+(setq-default indent-tabs-mode nil)
+
 ;; Use C offset values for indenting Go code
 (smart-tabs-add-language-support go go-mode-hook
   ((c-indent-line . c-basic-offset)
@@ -104,9 +121,9 @@ There are two things you can do about this warning:
 ;; Enable smart tabs for specific languages
 (smart-tabs-insinuate 'c 'c++ 'go 'python 'javascript)
 
-;; Auto-indent on RET
-(add-hook 'lisp-mode-hook '(lambda ()
-			     (local-set-key (kbd "RET") 'newline-and-indent)))
+;; Enable tabs only for modes with smart tabs handling
+(add-hook 'c-mode-common-hook
+	  (lambda () (setq indent-tabs-mode t)))
 
 ;; -----------------------------------------------------------------------------
 ;; Miscellaneous visual
