@@ -108,7 +108,7 @@ There are two things you can do about this warning:
 (package-install 'smart-tabs-mode)
 
 ;; Set the default C indentation to 2 columns
-(setq-default c-basic-offset 2)
+(setq-default tab-width 2)
 
 ;; Disable tabs globally (spaces only)
 (setq-default indent-tabs-mode nil)
