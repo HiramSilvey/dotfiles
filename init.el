@@ -5,11 +5,8 @@
 ;;; Code:
 
 ;; -----------------------------------------------------------------------------
-;; High-priority miscellaneous
+;; High-priority
 ;; -----------------------------------------------------------------------------
-
-(require 'package)
-(require 'cc-mode)
 
 ;; Start the server for emacsclient
 (server-start)
@@ -33,8 +30,11 @@
 (setq mac-option-modifier nil)
 
 ;; -----------------------------------------------------------------------------
-;; MELPA
+;; Package management
 ;; -----------------------------------------------------------------------------
+
+;; Add ELPA and MELPA repositories
+(require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
@@ -45,8 +45,6 @@ which is unsafe because it allows man-in-the-middle attacks.
 There are two things you can do about this warning:
 1. Install an Emacs version that does support SSL and be safe.
 2. Remove this warning from your init file so you won't see it again."))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable
-  ;; as desired
   (add-to-list 'package-archives (cons "melpa"
 				       (concat proto "://melpa.org/packages/"))
 	       t)
@@ -55,42 +53,35 @@ There are two things you can do about this warning:
     (add-to-list 'package-archives
 		 (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 
-;; Initialize
+;; Initialize and refresh packages
 (package-initialize)
 (package-refresh-contents)
 
 ;; -----------------------------------------------------------------------------
-;; Company mode
+;; Autocomplete
 ;; -----------------------------------------------------------------------------
 
+;; Install company mode with specific language backends
 (package-install 'company)
-
-;; Install specific language backends
 (package-install 'company-c-headers)
 (package-install 'company-go)
 
-;; Enable globally
+;; Enable company mode globally
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; -----------------------------------------------------------------------------
-;; Yasnippets
-;; -----------------------------------------------------------------------------
-
-(package-install 'yasnippet)
-
-;; Enable globally
-(yas-global-mode 1)
+;; Enable interactively do things
+(require 'ido)
+(ido-mode t)
 
 ;; -----------------------------------------------------------------------------
-;; Flycheck
+;; Syntax checking
 ;; -----------------------------------------------------------------------------
 
+;; Install flycheck and enable globally
 (package-install 'flycheck)
-
-;; Enable globally
 (global-flycheck-mode)
 
-;; OSX-specific fix for flycheck
+;; macOS-specific: Fix $PATH for flycheck
 (package-install 'exec-path-from-shell)
 (exec-path-from-shell-initialize)
 
@@ -100,9 +91,10 @@ There are two things you can do about this warning:
   '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
 
 ;; -----------------------------------------------------------------------------
-;; Smart tabs
+;; Indentation
 ;; -----------------------------------------------------------------------------
 
+;; Install smart tabs
 (package-install 'smart-tabs-mode)
 
 ;; Set the default C indentation to 2 columns
@@ -124,7 +116,7 @@ There are two things you can do about this warning:
 	  (lambda () (setq indent-tabs-mode t)))
 
 ;; -----------------------------------------------------------------------------
-;; Miscellaneous visual
+;; Visual
 ;; -----------------------------------------------------------------------------
 
 ;; Load the theme
@@ -140,9 +132,6 @@ There are two things you can do about this warning:
 ;; Show column number cursor position
 (column-number-mode 1)
 
-;; Start maximized
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
 ;; Enable smooth scrolling
 (setq scroll-step 1)
 (setq scroll-conservatively 10000)
@@ -156,8 +145,19 @@ There are two things you can do about this warning:
 (global-whitespace-mode t)
 
 ;; -----------------------------------------------------------------------------
-;; Low-priority miscellaneous
+;; Other
 ;; -----------------------------------------------------------------------------
+
+;; Support C, C++, Java, etc.
+(require 'cc-mode)
+
+;; Install yasnippet and enable globally
+(package-install 'yasnippet)
+(yas-global-mode 1)
+
+;; Install undo tree and enable globally
+(package-install 'undo-tree)
+(global-undo-tree-mode 1)
 
 ;; Automatically refresh the file when it changes on disk
 (global-auto-revert-mode t)
