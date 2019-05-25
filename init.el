@@ -46,16 +46,26 @@ There are two things you can do about this warning:
 1. Install an Emacs version that does support SSL and be safe.
 2. Remove this warning from your init file so you won't see it again."))
   (add-to-list 'package-archives (cons "melpa"
-				       (concat proto "://melpa.org/packages/"))
-	       t)
+               (concat proto "://melpa.org/packages/"))
+         t)
   (when (< emacs-major-version 24)
     ;; For important compatibility libraries like cl-lib
     (add-to-list 'package-archives
-		 (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+     (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 
 ;; Initialize and refresh packages
 (package-initialize)
 (package-refresh-contents)
+
+;; -----------------------------------------------------------------------------
+;; Language support
+;; -----------------------------------------------------------------------------
+
+;; Support C, C++, Java, etc.
+(require 'cc-mode)
+
+;; Support golang
+(package-install 'go-mode)
 
 ;; -----------------------------------------------------------------------------
 ;; Autocomplete
@@ -72,6 +82,24 @@ There are two things you can do about this warning:
 ;; Enable interactively do things
 (require 'ido)
 (ido-mode t)
+
+;; -----------------------------------------------------------------------------
+;; Org mode
+;; -----------------------------------------------------------------------------
+
+;; Install org mode
+(package-install 'org)
+
+;; Fix TAB conflict with YASnippet
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq-local yas/trigger-key [tab])
+            (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+
+;; Set org-specific keybindings
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
 
 ;; -----------------------------------------------------------------------------
 ;; Syntax checking
@@ -113,7 +141,7 @@ There are two things you can do about this warning:
 
 ;; Enable tabs only for modes with smart tabs handling
 (add-hook 'c-mode-common-hook
-	  (lambda () (setq indent-tabs-mode t)))
+    (lambda () (setq indent-tabs-mode t)))
 
 ;; -----------------------------------------------------------------------------
 ;; Visual
@@ -137,19 +165,12 @@ There are two things you can do about this warning:
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 
-;; Highlight characters past the 80-column limit
+;; Enable whitespace cleanup
 (require 'whitespace)
-(setq whitespace-style '(face lines-tail))
-;; Aggressively cleanup bogus whitespace
-(setq whitespace-action '(cleanup))
-(global-whitespace-mode t)
 
 ;; -----------------------------------------------------------------------------
 ;; Other
 ;; -----------------------------------------------------------------------------
-
-;; Support C, C++, Java, etc.
-(require 'cc-mode)
 
 ;; Install yasnippet and enable globally
 (package-install 'yasnippet)
@@ -162,6 +183,9 @@ There are two things you can do about this warning:
 ;; Automatically refresh the file when it changes on disk
 (global-auto-revert-mode t)
 
+;; Cleanup bogus whitespace before saving
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 ;;; init.el ends here
 
 (custom-set-variables
@@ -172,9 +196,3 @@ There are two things you can do about this warning:
  '(package-selected-packages
    (quote
     (flycheck yasnippet smart-tabs-mode moe-theme flycheck-golangci-lint exec-path-from-shell company))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(whitespace-line ((t (:background "dark red" :foreground "White")))))
