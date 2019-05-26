@@ -25,10 +25,6 @@
 (define-key key-translation-map [?\M-x] [?\M-u])
 (define-key key-translation-map [?\M-u] [?\M-x])
 
-;; macOS-specific: Set command to meta
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier nil)
-
 ;; -----------------------------------------------------------------------------
 ;; Package management
 ;; -----------------------------------------------------------------------------
@@ -196,3 +192,9 @@ There are two things you can do about this warning:
  '(package-selected-packages
    (quote
     (flycheck yasnippet smart-tabs-mode moe-theme flycheck-golangci-lint exec-path-from-shell company))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
