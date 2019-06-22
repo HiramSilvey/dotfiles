@@ -8,7 +8,10 @@
 ;; Support C, C++, Java, etc.
 (require 'cc-mode)
 
-;; Support golang
+;; Support Go
 (package-install 'go-mode)
+
+;; Support Rust
+(package-install 'rust-mode)
 
 ;;; language.el ends here
