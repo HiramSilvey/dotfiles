@@ -13,5 +13,7 @@
 
 ;; Support Rust
 (package-install 'rust-mode)
+(package-install 'cargo)
+(setq rust-format-on-save t)
 
 ;;; language.el ends here

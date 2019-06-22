@@ -11,7 +11,12 @@
 
 ;; Turn on golang linters in flycheck
 (package-install 'flycheck-golangci-lint)
-(eval-after-load 'flycheck
+(with-eval-after-load 'go-mode
   '(add-hook 'flycheck-mode-hook #'flycheck-golangci-lint-setup))
+
+;; Turn on rustlang linters in flycheck
+(package-install 'flycheck-rust)
+(with-eval-after-load 'rust-mode
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;;; syntax.el ends here
