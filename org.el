@@ -7,6 +7,7 @@
 
 ;; Install Org
 (package-install 'org)
+(require 'org)
 
 ;; Resolve TAB key conflict with YASnippet
 (add-hook 'org-mode-hook
