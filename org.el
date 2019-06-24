@@ -19,6 +19,9 @@
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
 
+;; Enable a cleaner indentation view
+(add-hook 'org-mode-hook 'org-indent-mode)
+
 ;; Add custom TODO states
 (setq org-todo-keywords
       '((sequence "TODO(t)" "CURRENT(c)" "|" "DONE(d)" "CANCELED(x@)")))
