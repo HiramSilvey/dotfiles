@@ -7,6 +7,7 @@
 
 ;; Install smart tabs
 (package-install 'smart-tabs-mode)
+(require 'smart-tabs-mode)
 
 ;; Set the default C indentation to 2 columns
 (setq-default tab-width 2)

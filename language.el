@@ -8,7 +8,17 @@
 ;; Support C, C++, Java, etc.
 (require 'cc-mode)
 
-;; Support golang
+;; Support Go
 (package-install 'go-mode)
+(require 'go-mode)
+
+;; Support Rust & Cargo
+(package-install 'rust-mode)
+(require 'rust-mode)
+(setq rust-format-on-save t)
+
+(package-install 'cargo)
+(require 'cargo)
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
 
 ;;; language.el ends here

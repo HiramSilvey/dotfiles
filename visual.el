@@ -7,6 +7,7 @@
 
 ;; Load the theme
 (package-install 'moe-theme)
+(require 'moe-theme)
 (load-theme 'moe-dark t)
 
 ;; Disable GUI toolbar
