@@ -27,8 +27,8 @@
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 
-;; Automatically break lines at the 80 column mark in markdown mode
-(add-hook 'gfm-mode-hook '(lambda () (setq fill-column 80)))
-(add-hook 'gfm-mode-hook 'turn-on-auto-fill)
+;; Automatically break lines at the 80 column mark in text mode
+(add-hook 'text-mode-hook '(lambda () (setq fill-column 80)))
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;; visual.el ends here
