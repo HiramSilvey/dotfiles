@@ -6,6 +6,7 @@
 ;;; Code:
 
 ;; Support C, C++, Java, etc.
+(package-install 'cc-mode)
 (require 'cc-mode)
 
 ;; Support Go
@@ -20,5 +21,9 @@
 (package-install 'cargo)
 (require 'cargo)
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+
+;; Support markdown
+(package-install 'markdown-mode)
+(require 'markdown-mode)
 
 ;;; language.el ends here

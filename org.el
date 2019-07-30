@@ -23,15 +23,16 @@
 ;; Enable a cleaner indentation view
 (add-hook 'org-mode-hook 'org-indent-mode)
 
-;; Add custom TODO states
+;; Add custom TODO states and prompt for a note when canceled
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "CURRENT(c)" "|" "DONE(d)" "CANCELED(x@)")))
+      '((sequence "TODO(t)" "|" "DONE(d)" "CANCELED(x@)")))
 
 ;; Add custom face colors for custom TODO states
 (setq org-todo-keyword-faces
-      '(("CURRENT" . (:foreground "light yellow" :inverse-video t :weight bold)) ("CANCELED" . (:foreground "light grey" :inverse-video t :weight bold))))
+      '(("CANCELED" . (:foreground "light grey" :inverse-video t :weight bold))))
 
-;; Log the time when the TODO state of an item changes to a DONE state
+;; Log the date when the TODO state of an item changes to a DONE state
+(setq org-log-done-with-time nil) ;; Do not log the time with the date
 (setq org-log-done 'time)
 
 ;;; org.el ends here
