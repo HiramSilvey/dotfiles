@@ -15,6 +15,10 @@
 (require 'undo-tree)
 (global-undo-tree-mode 1)
 
+;; Install transpose frame
+(package-install 'transpose-frame)
+(require 'transpose-frame)
+
 ;; Automatically refresh the file when it changes on disk
 (global-auto-revert-mode t)
 
