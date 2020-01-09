@@ -60,6 +60,12 @@ Version 2018-09-10"
 (global-set-key (kbd "C-w") 'xah-cut-line-or-region) ; cut
 (global-set-key (kbd "M-w") 'xah-copy-line-or-region) ; copy
 
+;; Bind C-S-arrows to natural window resize functions.
+(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+(global-set-key (kbd "S-C-<down>") 'shrink-window)
+(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
+
 ;; Swap the u and x keys for all emacs commands
 (defun swap-ctl-u-ctl-x (frame)
     "Swap the ctl-u and ctl-x keys in the newly created FRAME."
