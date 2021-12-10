@@ -31,6 +31,11 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     ruby
+     yaml
+     javascript
+     html
+     sql
      php
      shell-scripts
      markdown
@@ -41,7 +46,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     auto-completion
+     ;; auto-completion
      better-defaults
      emacs-lisp
      git
@@ -53,6 +58,7 @@ values."
      syntax-checking
      version-control
      latex
+     protobuf
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -62,7 +68,9 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(
+     smartparens
+                                    )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -136,8 +144,8 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 17
+   dotspacemacs-default-font '("MesloLGS NF"
+                               :size 21
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -304,6 +312,22 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (custom-set-variables '(spacemacs-theme-custom-colors
+                          '((aqua       . "#00bbbb")
+                            (aqua-bg    . "#6ae3fa")
+                            (green      . "#38de21")
+                            (green-bg   . "#3bd01d")
+                            (green-bg-s . "#3bd01d")
+                            (cyan       . "#00bbbb")
+                            (red        . "#ff0000")
+                            (red-bg     . "#f40e17")
+                            (red-bg-s   . "#f40e17")
+                            (blue       . "#1460d2")
+                            (blue-bg    . "#5555ff")
+                            (blue-bg-s  . "#5555ff")
+                            (magenta    . "#ff005d")
+                            (yellow     . "#ffe50a")
+                            (yellow-bg  . "#edc809"))))
   )
 
 (defun dotspacemacs/user-config ()
@@ -321,16 +345,26 @@ you should place your code here."
                 ;; Enable spell checking auto-completion popup.
                 ;;'((spell-checking :variables =enable-flyspell-auto-completion= t))
                 )
-  ;; Truncate lines in terminal mode to support fish shell.
-  (add-hook 'term-mode-hook 'toggle-truncate-lines)
+  ;; Enable transparent background in terminal.
+  (defun set-background-for-terminal (&optional frame)
+    (or frame (setq frame (selected-frame)))
+    "unsets the background color in terminal mode"
+    (unless (display-graphic-p frame)
+      (set-face-background 'default "unspecified-bg" frame)))
+  (add-hook 'after-make-frame-functions 'set-background-for-terminal)
+  (add-hook 'window-setup-hook 'set-background-for-terminal)
   ;; Prevent default org from being loaded by only evaluating org configurations
   ;; after ELPA org has been loaded.
   (with-eval-after-load 'org
     ;; Add a "canceled" TODO state with a note.
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
+          '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)")))
     )
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  (if (file-readable-p "~/.emacs.d/local.el")
+      (load "~/.emacs.d/local.el")
+    )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -341,11 +375,48 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(evil-want-Y-yank-to-eol nil)
+ '(org-agenda-files '("~/org/2021/Q3.org" "~/org/2020/Q4.org"))
  '(package-selected-packages
-   '(scad-mode arduino-mode phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode helm avy helm-core async popup git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck diff-hl auto-dictionary xterm-color smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download multi-term magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit git-commit with-editor transient eshell-z eshell-prompt-extras esh-help unfill mwim helm-company helm-c-yasnippet fuzzy company-statistics company-shell company-go company auto-yasnippet yasnippet ac-ispell auto-complete insert-shebang fish-mode mmm-mode markdown-toc markdown-mode gh-md go-guru go-eldoc go-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+   '(rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby yaml-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc coffee-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode sql-indent scad-mode arduino-mode phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode helm avy helm-core async popup git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck diff-hl auto-dictionary xterm-color smeargle shell-pop orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download multi-term magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit git-commit with-editor transient eshell-z eshell-prompt-extras esh-help unfill mwim helm-company helm-c-yasnippet fuzzy company-statistics company-shell company-go company auto-yasnippet yasnippet ac-ispell auto-complete insert-shebang fish-mode mmm-mode markdown-toc markdown-mode gh-md go-guru go-eldoc go-mode ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))
+ '(spacemacs-theme-comment-bg nil)
+ '(spacemacs-theme-custom-colors
+   '((aqua . "#00bbbb")
+     (aqua-bg . "#6ae3fa")
+     (green . "#38de21")
+     (green-bg . "#3bd01d")
+     (green-bg-s . "#3bd01d")
+     (cyan . "#00bbbb")
+     (red . "#ff0000")
+     (red-bg . "#f40e17")
+     (red-bg-s . "#f40e17")
+     (blue . "#1460d2")
+     (blue-bg . "#5555ff")
+     (blue-bg-s . "#5555ff")
+     (magenta . "#ff005d")
+     (yellow . "#ffe50a")
+     (yellow-bg . "#edc809"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(font-lock-comment-face ((t (:background "unspecified" :foreground "#008787"))))
+ '(helm-buffer-directory ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-buffer-file ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-buffer-not-saved ((t (:extend t :background "unspecified" :foreground "#d75fd7"))))
+ '(helm-buffer-process ((t (:extend t :background "unspecified" :foreground "#268bd2"))))
+ '(helm-buffer-saved-out ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-buffer-size ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-candidate-number ((t (:inherit bold :extend t :background "unspecified" :foreground "#268bd2"))))
+ '(helm-ff-directory ((t (:inherit bold :extend t :background "unspecified" :foreground "#268bd2"))))
+ '(helm-ff-dotted-symlink-directory ((t (:inherit bold :extend t :background "unspecified" :foreground "#00bbbb"))))
+ '(helm-ff-executable ((t (:extend t :background "unspecified" :foreground "#86dc2f" :weight normal))))
+ '(helm-ff-file ((t (:extend t :background "unspecified" :foreground "#b2b2b2" :weight normal))))
+ '(helm-ff-invalid-symlink ((t (:inherit bold :extend t :background "unspecified" :foreground "#ff0000"))))
+ '(helm-ff-symlink ((t (:inherit bold :extend t :background "unspecified" :foreground "#00bbbb"))))
+ '(helm-grep-cmd-line ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-grep-file ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-grep-finish ((t (:extend t :background "unspecified" :foreground "#b2b2b2"))))
+ '(helm-grep-lineno ((t (:inherit bold :extend t :background "unspecified" :foreground "#df005f"))))
+ '(hl-line ((t (:extend t :background "unspecified"))))
+ '(term ((t (:background "unspecified" :foreground "#b2b2b2")))))
