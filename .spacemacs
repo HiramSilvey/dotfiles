@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     python
+     typescript
+     rust
      ruby
      yaml
      javascript
@@ -64,12 +67,14 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+                                      arduino-mode
+                                      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
    dotspacemacs-excluded-packages '(
-     smartparens
+                                    smartparens
                                     )
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
@@ -361,6 +366,9 @@ you should place your code here."
           '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)")))
     )
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+
+  ;; Auto-format rust files on save.
+  (setq rust-format-on-save t)
 
   (if (file-readable-p "~/.emacs.d/local.el")
       (load "~/.emacs.d/local.el")
