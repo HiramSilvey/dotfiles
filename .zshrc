@@ -1,3 +1,9 @@
+# if tmux is executable, X is running, and not inside a tmux session, then try to attach.
+# if attachment fails, start a new session
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ]; then
+    [ -z "${TMUX}" ] && { tmux attach || tmux; } >/dev/null 2>&1
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -9,7 +15,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/hiram/.oh-my-zsh"
+export ZSH="/home/$USER/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -106,13 +112,27 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Environment variables
-export EDITOR="emacsclient -c -a=''"
+export EDITOR=emacs
 export ALTERNATE_EDITOR=nano
-
-# Aliases
-alias e="emacsclient -c -a=''"
-alias te="emacsclient -t -a=''"
-alias ke="emacsclient -e '(save-buffers-kill-emacs)'"
+export PATH=$PATH:/home/$USER/.local/bin:/home/$USER/Applications
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Emacs vterm support.
+vterm_printf(){
+    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+        # Tell tmux to pass the escape sequences through
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
