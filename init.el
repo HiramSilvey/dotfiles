@@ -9,9 +9,6 @@
 ;; Enable use-package.
 (eval-when-compile (require 'use-package))
 
-;; Enable transparent background in GUI emacs.
-(set-frame-parameter (selected-frame) 'alpha '(90 . 50))
-
 ;; Enable VERTical Interactive COmpletion.
 (use-package vertico
   :ensure t
@@ -44,8 +41,8 @@
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
+	completion-category-defaults nil
+	completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -63,7 +60,7 @@
 
   ;; Do not allow the cursor in the minibuffer prompt
   (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
+	'(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
@@ -157,19 +154,62 @@
 (use-package org
   :ensure t)
 
+;; Highlight code parentheses.
+(use-package highlight-parentheses
+  :ensure t
+  :config (add-hook 'prog-mode-hook #'highlight-parentheses-mode))
+
+;; COMPlete ANYthing.
+(use-package company
+  :ensure t
+  :config (add-hook 'after-init-hook 'global-company-mode))
+
+;; Set theme depending on GUI vs terminal Emacs.
+(if (display-graphic-p)
+;; GUI
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  ;; (doom-themes-neotree-config)
+
+  ;; or for treemacs users
+  ;; (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  ;; (doom-themes-treemacs-config)
+
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+;; Terminal
+(use-package monokai-theme
+  :ensure t
+  :config
+  (load-theme 'monokai t))
+)
+
+;; Remove extra whitespace on file save.
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 ;; Auto-format c++ files on save.
 ;; Source: https://emacs.stackexchange.com/questions/48500/how-to-clang-format-the-current-buffer-on-save
 (defun clang-format-save-hook-for-this-buffer ()
   "Create a buffer local save hook."
   (add-hook 'before-save-hook
-            (lambda ()
-              (when (locate-dominating-file "." ".clang-format")
-                (clang-format-buffer))
-              ;; Continue to save.
-              nil)
-            nil
-            ;; Buffer local hook.
-            t))
+	    (lambda ()
+	      (when (locate-dominating-file "." ".clang-format")
+		(clang-format-buffer))
+	      ;; Continue to save.
+	      nil)
+	    nil
+	    ;; Buffer local hook.
+	    t))
 (add-hook 'c-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
 (add-hook 'c++-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
 
@@ -188,13 +228,14 @@
  '(cua-global-mark-cursor-color "#7ec98f")
  '(cua-overwrite-cursor-color "#e5c06d")
  '(cua-read-only-cursor-color "#8ac6f2")
- '(custom-enabled-themes '(deeper-blue))
  '(custom-safe-themes
-   '("7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "285d1bf306091644fb49993341e0ad8bafe57130d9981b680c1dbd974475c5c7" "00445e6f15d31e9afaa23ed0d765850e9cd5e929be5e8e63b114a3346236c44c" "4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "d89e15a34261019eec9072575d8a924185c27d3da64899905f8548cbd9491a36" "833ddce3314a4e28411edf3c6efde468f6f2616fc31e17a62587d6a9255f4633" "57a29645c35ae5ce1660d5987d3da5869b048477a7801ce7ab57bfb25ce12d3e" "efcecf09905ff85a7c80025551c657299a4d18c5fcfedd3b2f2b6287e4edd659" "f5b6be56c9de9fd8bdd42e0c05fecb002dedb8f48a5f00e769370e4517dde0e8" "3e200d49451ec4b8baa068c989e7fba2a97646091fd555eca0ee5a1386d56077" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "1b8d67b43ff1723960eb5e0cba512a2c7a2ad544ddb2533a90101fd1852b426e" "82d2cac368ccdec2fcc7573f24c3f79654b78bf133096f9b40c20d97ec1d8016" default))
+   '("1bddd01e6851f5c4336f7d16c56934513d41cc3d0233863760d1798e74809b4b" default))
+ '(exwm-floating-border-color "#191b20")
  '(fci-rule-color "#2f2f2e")
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
  '(frame-background-mode 'dark)
  '(highlight-changes-colors '("#e5786d" "#834c98"))
+ '(highlight-parentheses-colors '("#7ec98f" "#e5c06d" "#a4b5e6" "#834c98" "#8ac6f2"))
  '(highlight-symbol-colors
    '("#55204c0039fc" "#3f0a4e4240dc" "#5a2849c746fd" "#3fd2334a42f4" "#426a4d5455d9" "#537247613a13" "#46c549b0535c"))
  '(highlight-symbol-foreground-color "#999891")
@@ -211,15 +252,21 @@
    '("#4c4536" "#4b4136" "#504341" "#4d3936" "#3b313d" "#41434a" "#3b473c" "#3d464c"))
  '(hl-fg-colors
    '("#2a2a29" "#2a2a29" "#2a2a29" "#2a2a29" "#2a2a29" "#2a2a29" "#2a2a29" "#2a2a29"))
- '(hl-paren-colors '("#7ec98f" "#e5c06d" "#a4b5e6" "#834c98" "#8ac6f2"))
  '(inhibit-startup-screen t)
+ '(jdee-db-active-breakpoint-face-colors (cons "#1B2229" "#51afef"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#98be65"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(lsp-ui-doc-border "#999891")
  '(nrepl-message-colors
    '("#ffb4ac" "#ddaa6f" "#e5c06d" "#3d464c" "#e3eaea" "#41434a" "#7ec98f" "#e5786d" "#834c98"))
+ '(objed-cursor-color "#ff6c6b")
  '(package-selected-packages
-   '(magit dumb-jump flycheck-popup-tip-mode flycheck-popup-tip flycheck vterm undo-fu-session undo-fu diff-hl fd-dired diredfl all-the-icons-dired goggles doom-modeline hl-todo orderless vertico use-package))
+   '(company highlight-parentheses doom-themes magit dumb-jump flycheck-popup-tip-mode flycheck-popup-tip flycheck vterm undo-fu-session undo-fu diff-hl fd-dired diredfl all-the-icons-dired goggles doom-modeline hl-todo orderless vertico use-package))
+ '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(pos-tip-background-color "#2f2f2e")
  '(pos-tip-foreground-color "#999891")
+ '(rustic-ansi-faces
+   ["#282c34" "#ff6c6b" "#98be65" "#ECBE7B" "#51afef" "#c678dd" "#46D9FF" "#bbc2cf"])
  '(save-place-mode t)
  '(scroll-bar-mode nil)
  '(size-indication-mode t)
