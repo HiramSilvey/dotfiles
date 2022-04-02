@@ -12,21 +12,7 @@
 ;; Enable VERTical Interactive COmpletion.
 (use-package vertico
   :ensure t
-  :init
-  (vertico-mode)
-
-  ;; Different scroll margin
-  ;; (setq vertico-scroll-margin 0)
-
-  ;; Show more candidates
-  ;; (setq vertico-count 20)
-
-  ;; Grow and shrink the Vertico minibuffer
-  ;; (setq vertico-resize t)
-
-  ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-  ;; (setq vertico-cycle t)
-  )
+  :init (vertico-mode))
 
 ;; Optionally use the `orderless' completion style. See
 ;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
@@ -46,10 +32,17 @@
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :init
-  (savehist-mode))
+  :init (savehist-mode))
 
-;; Additional useful vertico configurations.
+;; Enable richer vertico annotations using the marginalia package.
+(use-package marginalia
+  :ensure t
+  ;; Bind `marginalia-cycle` only in the minibuffer
+  :bind (:map minibuffer-local-map
+	      ("M-A" . marginalia-cycle))
+  :init (marginalia-mode))
+
+;; Additional useful vertico & misc configurations.
 (use-package emacs
   :init
   ;; Add prompt indicator to `completing-read-multiple'.
@@ -69,13 +62,15 @@
   ;;       #'command-completion-default-include-p)
 
   ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t))
+  (setq enable-recursive-minibuffers t)
+
+  ;; Remove extra whitespace on file save.
+  (add-hook 'before-save-hook 'whitespace-cleanup))
 
 ;; Highlight TODO keywords.
 (use-package hl-todo
   :ensure t
-  :init
-  (hl-todo-mode))
+  :init (hl-todo-mode))
 
 ;; Enable a snazzy modeline.
 (use-package doom-modeline
@@ -97,16 +92,6 @@
 (use-package fd-dired
   :ensure t)
 
-;; Pretty icons.
-(use-package all-the-icons
-  :ensure t
-  :if (display-graphic-p))
-
-(use-package all-the-icons-dired
-  :ensure t
-  :after all-the-icons
-  :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-
 ;; Highlight VC changes in the lefthand gutter.
 (use-package diff-hl
   :ensure t
@@ -116,9 +101,10 @@
 (use-package undo-fu
   :ensure t
   :config
-  (global-unset-key (kbd "C-z"))
-  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
-  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+  (global-unset-key (kbd "C-/"))
+  (global-unset-key (kbd "M-_"))
+  (global-set-key (kbd "C-/")   'undo-fu-only-undo)
+  (global-set-key (kbd "M-_")   'undo-fu-only-redo))
 
 ;; Undo + redo across emacs sessions.
 (use-package undo-fu-session
@@ -164,54 +150,57 @@
   :ensure t
   :config (add-hook 'after-init-hook 'global-company-mode))
 
-;; Set theme depending on GUI vs terminal Emacs.
-(if (display-graphic-p)
-;; GUI
-(use-package doom-themes
+;; Auto-format C/C++ code on save.
+(use-package clang-format
   :ensure t
   :config
-  ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
-
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
-  ;; (doom-themes-neotree-config)
-
-  ;; or for treemacs users
-  ;; (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-  ;; (doom-themes-treemacs-config)
-
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-;; Terminal
-(use-package monokai-theme
-  :ensure t
-  :config
-  (load-theme 'monokai t))
-)
-
-;; Remove extra whitespace on file save.
-(add-hook 'before-save-hook 'whitespace-cleanup)
-
-;; Auto-format c++ files on save.
-;; Source: https://emacs.stackexchange.com/questions/48500/how-to-clang-format-the-current-buffer-on-save
-(defun clang-format-save-hook-for-this-buffer ()
-  "Create a buffer local save hook."
-  (add-hook 'before-save-hook
+  (add-hook 'c-common-mode-hook
 	    (lambda ()
-	      (when (locate-dominating-file "." ".clang-format")
-		(clang-format-buffer))
-	      ;; Continue to save.
-	      nil)
-	    nil
-	    ;; Buffer local hook.
-	    t))
-(add-hook 'c-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
-(add-hook 'c++-mode-hook (lambda () (clang-format-save-hook-for-this-buffer)))
+	      (add-hook (make-local-variable 'before-save-hook)
+			'clang-format-buffer))))
+
+;; Use packages depending on GUI vs terminal Emacs.
+(if (display-graphic-p)
+    ;; GUI
+    (progn
+      ;; Pretty icons.
+      (use-package all-the-icons
+	:ensure t
+	:if (display-graphic-p))
+
+      (use-package all-the-icons-dired
+	:ensure t
+	:after all-the-icons
+	:config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+      ;; Pretty theme.
+      (use-package doom-themes
+	:ensure t
+	:config
+	;; Global settings (defaults)
+	(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	      doom-themes-enable-italic t) ; if nil, italics is universally disabled
+	(load-theme 'doom-one t)
+
+	;; Enable flashing mode-line on errors
+	(doom-themes-visual-bell-config)
+
+	;; Enable custom neotree theme (all-the-icons must be installed!)
+	;; (doom-themes-neotree-config)
+
+	;; or for treemacs users
+	;; (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+	;; (doom-themes-treemacs-config)
+
+	;; Corrects (and improves) org-mode's native fontification.
+	(doom-themes-org-config))
+      )
+  ;; Terminal
+  (use-package monokai-theme
+    :ensure t
+    :config
+    (load-theme 'monokai t))
+  )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
