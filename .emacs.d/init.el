@@ -65,7 +65,15 @@
   (setq enable-recursive-minibuffers t)
 
   ;; Remove extra whitespace on file save.
-  (add-hook 'before-save-hook 'whitespace-cleanup))
+  (add-hook 'before-save-hook 'whitespace-cleanup)
+
+  ;; Consolidate backup file location.
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+  ;; Load local file configurations if present.
+  (if (file-readable-p "~/.emacs.d/local.el")
+      (load "~/.emacs.d/local.el"))
+  )
 
 ;; Highlight TODO keywords.
 (use-package hl-todo
@@ -115,7 +123,10 @@
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :config
+  (global-unset-key (kbd "C-c t"))
+  (global-set-key (kbd "C-c t") 'vterm))
 
 ;; Syntax checker.
 (use-package flycheck
