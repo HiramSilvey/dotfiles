@@ -1,6 +1,7 @@
-;;; init.el-- Hiram's configuration
-;;; Commentary:;
+;;; init.el -- Hiram's configuration
+;;; Commentary:
 ;;; Code:
+
 ;; Enable installing packages from MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
