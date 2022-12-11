@@ -1,7 +1,6 @@
-;;; init.el -- Hiram's configuration
-;;; Commentary:
+;;; init.el-- Hiram's configuration
+;;; Commentary:;
 ;;; Code:
-
 ;; Enable installing packages from MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -60,6 +59,9 @@
   ;; Vertico commands are hidden in normal buffers.
   ;; (setq read-extended-command-predicate
   ;;       #'command-completion-default-include-p)
+
+  ;; Toggle menu-bar off.
+  (menu-bar-mode -1)
 
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t)
@@ -149,7 +151,9 @@
 
 ;; Org mode!
 (use-package org
-  :ensure t)
+  :ensure t
+  :config (setq org-todo-keywords
+	  '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)"))))
 
 ;; Highlight code parentheses.
 (use-package highlight-parentheses
@@ -163,55 +167,62 @@
 
 ;; Auto-format C/C++ code on save.
 (use-package clang-format
+  :ensure t)
+(use-package cc-mode
+  :after clang-format
+  :config (add-hook 'c-mode-common-hook
+		    (lambda ()
+		      (add-hook 'before-save-hook 'clang-format-buffer nil 'local))))
+
+;; Add support for Rust code.
+(use-package rust-mode
+  :ensure t
+  ;; `TAB` indents correctly with spaces.
+  :config (add-hook 'rust-mode-hook
+		    (lambda () (setq indent-tabs-mode nil)))
+  ;; Format rust files on save using rustfmt.
+  (setq rust-format-on-save t))
+
+;; Add support for Cargo configuration files.
+(use-package cargo-mode
+  :ensure t
+  :config (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  :after rust-mode)
+
+;; Add support for Markdown files.
+(use-package markdown-mode
+  :ensure t
+  :init (setq markdown-command '("pandoc" "--from=markdown" "--to=html5")))
+
+;; Pretty icons.
+(use-package all-the-icons
+  :ensure t)
+(use-package all-the-icons-dired
+  :ensure t
+  :after all-the-icons
+  :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+;; Pretty theme.
+(use-package doom-themes
   :ensure t
   :config
-  (add-hook 'c-common-mode-hook
-	    (lambda ()
-	      (add-hook (make-local-variable 'before-save-hook)
-			'clang-format-buffer))))
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+	doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
 
-;; Use packages depending on GUI vs terminal Emacs.
-(if (display-graphic-p)
-    ;; GUI
-    (progn
-      ;; Pretty icons.
-      (use-package all-the-icons
-	:ensure t
-	:if (display-graphic-p))
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
 
-      (use-package all-the-icons-dired
-	:ensure t
-	:after all-the-icons
-	:config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  ;; (doom-themes-neotree-config)
 
-      ;; Pretty theme.
-      (use-package doom-themes
-	:ensure t
-	:config
-	;; Global settings (defaults)
-	(setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	      doom-themes-enable-italic t) ; if nil, italics is universally disabled
-	(load-theme 'doom-one t)
+  ;; or for treemacs users
+  ;; (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  ;; (doom-themes-treemacs-config)
 
-	;; Enable flashing mode-line on errors
-	(doom-themes-visual-bell-config)
-
-	;; Enable custom neotree theme (all-the-icons must be installed!)
-	;; (doom-themes-neotree-config)
-
-	;; or for treemacs users
-	;; (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
-	;; (doom-themes-treemacs-config)
-
-	;; Corrects (and improves) org-mode's native fontification.
-	(doom-themes-org-config))
-      )
-  ;; Terminal
-  (use-package monokai-theme
-    :ensure t
-    :config
-    (load-theme 'monokai t))
-  )
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
