@@ -126,10 +126,14 @@
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
+  :ensure t)
+
+;; Allow multiple vterm buffers.
+(use-package multi-vterm
   :ensure t
   :config
   (global-unset-key (kbd "C-c t"))
-  (global-set-key (kbd "C-c t") 'vterm))
+  (global-set-key (kbd "C-c t") 'multi-vterm))
 
 ;; Syntax checker.
 (use-package flycheck
@@ -165,6 +169,13 @@
 (use-package company
   :ensure t
   :config (add-hook 'after-init-hook 'global-company-mode))
+
+;; Ensure exec-path matches the shell $PATH
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (setq exec-path-from-shell-arguments nil)
+  (exec-path-from-shell-initialize))
 
 ;; Auto-format C/C++ code on save.
 (use-package clang-format
@@ -273,7 +284,7 @@
    '("#ffb4ac" "#ddaa6f" "#e5c06d" "#3d464c" "#e3eaea" "#41434a" "#7ec98f" "#e5786d" "#834c98"))
  '(objed-cursor-color "#ff6c6b")
  '(package-selected-packages
-   '(company highlight-parentheses doom-themes magit dumb-jump flycheck-popup-tip-mode flycheck-popup-tip flycheck vterm undo-fu-session undo-fu diff-hl fd-dired diredfl all-the-icons-dired goggles doom-modeline hl-todo orderless vertico use-package))
+   '(multi-vterm exec-path-from-shell company highlight-parentheses doom-themes magit dumb-jump flycheck-popup-tip-mode flycheck-popup-tip flycheck vterm undo-fu-session undo-fu diff-hl fd-dired diredfl all-the-icons-dired goggles doom-modeline hl-todo orderless vertico use-package))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(pos-tip-background-color "#2f2f2e")
  '(pos-tip-foreground-color "#999891")

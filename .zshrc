@@ -109,16 +109,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Environment variables
-export EDITOR=emacs
-export ALTERNATE_EDITOR=nano
-export PATH="$PATH:/home/$USER/.local/bin:/home/$USER/Applications:$(yarn global bin)"
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/library"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Emacs vterm support.
+## Emacs vterm support
+
+# Enable sending info from the shell to vterm directly.
 vterm_printf(){
     if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
 	# Tell tmux to pass the escape sequences through
@@ -130,3 +126,8 @@ vterm_printf(){
 	printf "\e]%s\e\\" "$1"
     fi
 }
+
+# Clear vterm scrollback when executing 'clear' shell command.
+if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+    alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
+fi
