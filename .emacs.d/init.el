@@ -5,9 +5,17 @@
 ;; Enable installing packages from MELPA.
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(package-initialize)
 
-;; Enable use-package.
+;; Bootstrap `use-package'.
+(eval-after-load 'gnutls
+  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 (eval-when-compile (require 'use-package))
+(require 'bind-key)
+(setq use-package-always-ensure t)
 
 ;; Enable VERTical Interactive COmpletion.
 (use-package vertico
@@ -37,7 +45,7 @@
 ;; Enable richer vertico annotations using the marginalia package.
 (use-package marginalia
   :ensure t
-  ;; Bind `marginalia-cycle` only in the minibuffer
+  ;; Bind `marginalia-cycle' only in the minibuffer
   :bind (:map minibuffer-local-map
 	      ("M-A" . marginalia-cycle))
   :init (marginalia-mode))
@@ -45,6 +53,11 @@
 ;; Additional useful vertico & misc configurations.
 (use-package emacs
   :init
+  ;; Powerlevel10k-compatible font.
+  (set-face-attribute 'default nil :font "MesloLGS NF" :height 143)
+  ;; Default unicode fallback font.
+  (set-fontset-font "fontset-default" 'unicode "Noto Sans Symbols 2")
+
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; Alternatively try `consult-completing-read-multiple'.
   (defun crm-indicator (args)
@@ -58,8 +71,8 @@
 
   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
   ;; Vertico commands are hidden in normal buffers.
-  ;; (setq read-extended-command-predicate
-  ;;       #'command-completion-default-include-p)
+  (setq read-extended-command-predicate
+	#'command-completion-default-include-p)
 
   ;; Toggle menu-bar off.
   (menu-bar-mode -1)
@@ -87,6 +100,10 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
+
+;; Icons needed for `doom-modeline'.
+(use-package nerd-icons
+  :ensure t)
 
 ;; Temporarily highlight modified regions.
 (use-package goggles
@@ -122,7 +139,7 @@
   :ensure t
   :config
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  :init (global-undo-fu-session-mode))
+  :init (undo-fu-session-global-mode))
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
@@ -189,7 +206,7 @@
 ;; Add support for Rust code.
 (use-package rust-mode
   :ensure t
-  ;; `TAB` indents correctly with spaces.
+  ;; `TAB' indents correctly with spaces.
   :config (add-hook 'rust-mode-hook
 		    (lambda () (setq indent-tabs-mode nil)))
   ;; Format rust files on save using rustfmt.
@@ -235,6 +252,11 @@
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
+
+;; Automatically update packages on startup.
+(use-package auto-package-update
+  :ensure t
+  :config (auto-package-update-maybe))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -332,4 +354,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "MesloLGS NF" :foundry "PfEd" :slant normal :weight normal :height 143 :width normal)))))
+ )

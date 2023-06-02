@@ -1,0 +1,9 @@
+.emacs.d/.last-package-update-day
+.emacs.d/auto-save-list/
+.emacs.d/backups/
+.emacs.d/eln-cache/
+.emacs.d/elpa/
+.emacs.d/history
+.emacs.d/places
+.emacs.d/transient/
+.emacs.d/undo-fu-session/
