@@ -58,6 +58,16 @@
   ;; Default unicode fallback font.
   (set-fontset-font "fontset-default" 'unicode "Noto Sans Symbols 2")
 
+  ;; Toggle menu-bar off.
+  (menu-bar-mode -1)
+
+  ;; Bind "C-c o" to swap between C/C++ source and header files.
+  ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
+  ;; other languages.
+  (add-hook 'c-mode-common-hook
+	    (lambda()
+	      (local-set-key (kbd "C-c o") 'ff-find-other-file)))
+
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; Alternatively try `consult-completing-read-multiple'.
   (defun crm-indicator (args)
@@ -74,9 +84,6 @@
   (setq read-extended-command-predicate
 	#'command-completion-default-include-p)
 
-  ;; Toggle menu-bar off.
-  (menu-bar-mode -1)
-
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t)
 
@@ -91,6 +98,17 @@
       (load "~/.emacs.d/local.el"))
   )
 
+;; Project-level interaction library.
+(use-package projectile
+  :ensure t
+  :init (projectile-mode +1)
+  :config (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+;; Help navigate keybindings.
+(use-package which-key
+  :ensure t
+  :init (which-key-mode))
+
 ;; Highlight TODO keywords.
 (use-package hl-todo
   :ensure t
@@ -100,10 +118,6 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
-
-;; Icons needed for `doom-modeline'.
-(use-package nerd-icons
-  :ensure t)
 
 ;; Temporarily highlight modified regions.
 (use-package goggles
@@ -149,7 +163,6 @@
 (use-package multi-vterm
   :ensure t
   :config
-  (global-unset-key (kbd "C-c t"))
   (global-set-key (kbd "C-c t") 'multi-vterm))
 
 ;; Syntax checker.
@@ -230,6 +243,10 @@
   :ensure t
   :after all-the-icons
   :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+
+;; Icons needed for `doom-modeline'.
+(use-package nerd-icons
+  :ensure t)
 
 ;; Pretty theme.
 (use-package doom-themes
