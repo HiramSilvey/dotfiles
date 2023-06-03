@@ -1,3 +1,22 @@
+# Emacs vterm support. This function must be placed above everything else, as
+# described by
+# https://github.com/romkatv/powerlevel10k/issues/1815#issuecomment-1079750240.
+function vterm_printf() {
+  emulate -L zsh
+  typeset -g _vterm_printf
+  local msg=${(%):-'51;A%n@%m:%/'}
+  if [[ -n $TMUX && $TERM == (tmux|screen)(|-*) ]]; then
+    printf -v _vterm_printf '\ePtmux;\e\e]%s\a\e\\' $msg
+  elif [[ $TERM == screen(|-*) ]]; then
+    printf -v _vterm_printf '\eP\e]%s\a\e\\' $msg
+  else
+    printf -v _vterm_printf '\e]%s\e\\' $msg
+  fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd vterm_printf
+vterm_printf
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -105,36 +124,33 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Load node version manager and its bash_completion.
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-## Emacs vterm support
+# Continued emacs vterm support.
 
-# Enable sending info from the shell to vterm directly.
-vterm_printf(){
-    if [ -n "$TMUX" ] && ([ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-	# Tell tmux to pass the escape sequences through
-	printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-	# GNU screen (screen, screen-256color, screen-256color-bce)
-	printf "\eP\e]%s\007\e\\" "$1"
-    else
-	printf "\e]%s\e\\" "$1"
-    fi
-}
-
-# Clear vterm scrollback when executing 'clear' shell command.
+# Completely clear the buffer. With this, everything that is not on screen
+# is erased.
 if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
 fi
 
-# Support directory and prompt tracking.
+# This is to change the title of the buffer based on information provided by the
+# shell. See, http://tldp.org/HOWTO/Xterm-Title-4.html, for the meaning of the
+# various symbols.
+add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
+
+# Sync directory and host in the shell with Emacs's current directory.
+#
+# The escape sequence "51;A" has also the role of identifying the end of the
+# prompt
 vterm_prompt_end() {
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
+    vterm_printf "51;A$USER@$HOST:$PWD"
 }
 setopt PROMPT_SUBST
 PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
