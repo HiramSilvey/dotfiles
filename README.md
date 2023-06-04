@@ -11,7 +11,7 @@
    * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 * [tmux](https://github.com/tmux/tmux)
 * [GNU Stow](https://www.gnu.org/software/stow/)
-* [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 28)
+* [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 29)
 * [emacs-libvterm dependencies](https://github.com/akermu/emacs-libvterm#requirements)
 
 ## Steps
