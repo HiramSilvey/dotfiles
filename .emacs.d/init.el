@@ -103,17 +103,6 @@
       (load "~/.emacs.d/local.el"))
   )
 
-;; Project-level interaction library.
-(use-package projectile
-  :ensure t
-  :init (projectile-mode +1)
-  :config (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
-
-;; Help navigate keybindings.
-(use-package which-key
-  :ensure t
-  :init (which-key-mode))
-
 ;; Highlight TODO keywords.
 (use-package hl-todo
   :ensure t
@@ -198,7 +187,7 @@
 ;; Highlight code parentheses.
 (use-package highlight-parentheses
   :ensure t
-  :config (add-hook 'prog-mode-hook #'highlight-parentheses-mode))
+  :config (add-hook 'prog-mode-hook 'highlight-parentheses-mode))
 
 ;; COMPlete ANYthing.
 (use-package company
@@ -212,6 +201,48 @@
   (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize))
 
+;; Project-level interaction library.
+(use-package projectile
+  :ensure t
+  :init (projectile-mode +1)
+  :config (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+
+;; Help navigate keybindings.
+(use-package which-key
+  :ensure t
+  :init (which-key-mode))
+
+;; Featureful LSP support.
+(use-package lsp-mode
+  :ensure t
+  :init (setq lsp-keymap-prefix "C-c l")
+  :config (add-hook 'prog-mode-hook 'lsp)
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; `lsp-mode' supported debugger.
+(use-package dap-mode
+  :ensure t
+  :after lsp-mode)
+
+;; Support debugging with LLDB.
+(use-package dap-lldb
+  :ensure t
+  :after dap-mode)
+
+;; Support debugging Rust.
+(use-package dap-gdb-lldb
+  :ensure t
+  :after dap-mode
+  :config (dap-register-debug-template "Rust::GDB Run Configuration"
+			     (list :type "gdb"
+				   :request "launch"
+				   :name "GDB::Run"
+			   :gdbpath "rust-gdb"
+				   :target nil
+				   :cwd nil)))
+
+;; Prefer tree-sitter enabled modes when installed.
 (use-package treesit-auto
   :ensure t
   :config
@@ -417,7 +448,7 @@
    '("#ffb4ac" "#ddaa6f" "#e5c06d" "#3d464c" "#e3eaea" "#41434a" "#7ec98f" "#e5786d" "#834c98"))
  '(objed-cursor-color "#ff6c6b")
  '(package-selected-packages
-   '(treesit-auto multi-vterm exec-path-from-shell company highlight-parentheses doom-themes magit dumb-jump flycheck-popup-tip-mode flycheck-popup-tip flycheck vterm undo-fu-session undo-fu diff-hl fd-dired diredfl all-the-icons-dired goggles doom-modeline hl-todo orderless vertico use-package))
+   '(dap-gdb-lldb dap-lldb dap-mode lsp-mode treesit-auto multi-vterm exec-path-from-shell company highlight-parentheses doom-themes magit dumb-jump flycheck-popup-tip-mode flycheck-popup-tip flycheck vterm undo-fu-session undo-fu diff-hl fd-dired diredfl all-the-icons-dired goggles doom-modeline hl-todo orderless vertico use-package))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(pos-tip-background-color "#2f2f2e")
  '(pos-tip-foreground-color "#999891")
@@ -466,3 +497,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+;;; init.el ends here
