@@ -35,8 +35,8 @@
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
   ;;       orderless-component-separator #'orderless-escapable-split-on-space)
   (setq completion-styles '(orderless)
-	completion-category-defaults nil
-	completion-category-overrides '((file (styles partial-completion)))))
+        completion-category-defaults nil
+        completion-category-overrides '((file (styles partial-completion)))))
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
@@ -47,7 +47,7 @@
   :ensure t
   ;; Bind `marginalia-cycle' only in the minibuffer
   :bind (:map minibuffer-local-map
-	      ("M-A" . marginalia-cycle))
+              ("M-A" . marginalia-cycle))
   :init (marginalia-mode))
 
 ;; Additional useful vertico & misc configurations.
@@ -68,10 +68,10 @@
   ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
   ;; other languages.
   (dolist (hook '(c-ts-mode-hook
-		  c++-ts-mode-hook
-		  c-or-c++-ts-mode-hook))
+                  c++-ts-mode-hook
+                  c-or-c++-ts-mode-hook))
     (add-hook hook (lambda()
-		     (local-set-key (kbd "C-c o") 'ff-find-other-file))))
+                     (local-set-key (kbd "C-c o") 'ff-find-other-file))))
 
   ;; Add prompt indicator to `completing-read-multiple'.
   ;; Alternatively try `consult-completing-read-multiple'.
@@ -81,13 +81,13 @@
 
   ;; Do not allow the cursor in the minibuffer prompt
   (setq minibuffer-prompt-properties
-	'(read-only t cursor-intangible t face minibuffer-prompt))
+        '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
   ;; Vertico commands are hidden in normal buffers.
   (setq read-extended-command-predicate
-	#'command-completion-default-include-p)
+        #'command-completion-default-include-p)
 
   ;; Enable recursive minibuffers
   (setq enable-recursive-minibuffers t)
@@ -182,7 +182,7 @@
 (use-package org
   :ensure t
   :config (setq org-todo-keywords
-	  '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)"))))
+          '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)"))))
 
 ;; Highlight code parentheses.
 (use-package highlight-parentheses
@@ -192,7 +192,9 @@
 ;; COMPlete ANYthing.
 (use-package company
   :ensure t
-  :config (add-hook 'after-init-hook 'global-company-mode))
+  :config
+  (global-set-key (kbd "C-c t") 'multi-vterm)
+  (add-hook 'after-init-hook 'global-company-mode))
 
 ;; Ensure exec-path matches the shell $PATH
 (use-package exec-path-from-shell
@@ -226,12 +228,12 @@
   :after lsp-mode
   ;; Support debugging Rust.
   :config (dap-register-debug-template "Rust::GDB Run Configuration"
-			     (list :type "gdb"
-				   :request "launch"
-				   :name "GDB::Run"
-			   :gdbpath "rust-gdb"
-				   :target nil
-				   :cwd nil)))
+                             (list :type "gdb"
+                                   :request "launch"
+                                   :name "GDB::Run"
+                           :gdbpath "rust-gdb"
+                                   :target nil
+                                   :cwd nil)))
 
 ;; Prefer tree-sitter enabled modes when installed.
 (use-package treesit-auto
@@ -244,14 +246,14 @@
 (use-package clang-format
   :ensure t
   :config (dolist (hook '(c-ts-mode-hook
-			  c++-ts-mode-hook
-			  c-or-c++-ts-mode-hook
-			  csharp-ts-mode-hook
-			  java-ts-mode-hook
-			  js-ts-mode-hook
-			  json-ts-mode-hook))
-	    (add-hook hook (lambda ()
-		      (add-hook 'before-save-hook 'clang-format-buffer nil 'local)))))
+                          c++-ts-mode-hook
+                          c-or-c++-ts-mode-hook
+                          csharp-ts-mode-hook
+                          java-ts-mode-hook
+                          js-ts-mode-hook
+                          json-ts-mode-hook))
+            (add-hook hook (lambda ()
+                      (add-hook 'before-save-hook 'clang-format-buffer nil 'local)))))
 
 ;; Add support for Rust code.
 (use-package rust-mode
@@ -259,8 +261,8 @@
 (use-package rust-ts-mode
   :after rust-mode
   :config (add-hook 'rust-ts-mode-hook
-		    (lambda ()
-		      (add-hook 'before-save-hook 'rust-format-buffer nil 'local))))
+                    (lambda ()
+                      (add-hook 'before-save-hook 'rust-format-buffer nil 'local))))
 
 ;; Add support for Cargo configuration files.
 (use-package cargo-mode
@@ -284,14 +286,19 @@
 (use-package nerd-icons
   :ensure t)
 
+;; Differentiate code buffers from everything else.
+(use-package solaire-mode
+  :ensure t
+  :config (solaire-global-mode +1))
+
 ;; Pretty theme.
 (use-package doom-themes
   :ensure t
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-	doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-one t)
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-solarized-dark t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
