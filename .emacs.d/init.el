@@ -59,7 +59,7 @@
   (set-fontset-font "fontset-default" 'unicode "Noto Sans Symbols 2")
 
   ;; `TAB' indents correctly with spaces.
-  (setq indent-tabs-mode nil)
+  (setq-default indent-tabs-mode nil)
 
   ;; Toggle menu-bar off.
   (menu-bar-mode -1)
@@ -223,17 +223,8 @@
 ;; `lsp-mode' supported debugger.
 (use-package dap-mode
   :ensure t
-  :after lsp-mode)
-
-;; Support debugging with LLDB.
-(use-package dap-lldb
-  :ensure t
-  :after dap-mode)
-
-;; Support debugging Rust.
-(use-package dap-gdb-lldb
-  :ensure t
-  :after dap-mode
+  :after lsp-mode
+  ;; Support debugging Rust.
   :config (dap-register-debug-template "Rust::GDB Run Configuration"
 			     (list :type "gdb"
 				   :request "launch"
