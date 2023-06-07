@@ -2,7 +2,6 @@
 
 ## Prerequisites
 
-* [tmux](https://github.com/tmux/tmux)
 * [Zsh](https://www.zsh.org/)
   * [Oh My Zsh](https://ohmyz.sh/)
     * [Powerlevel10k](https://github.com/romkatv/powerlevel10k#oh-my-zsh)
@@ -19,7 +18,7 @@
 ## Steps
 
 1. Clone the repository to `/path/to/dotfiles`.
-1. Delete all existing `~/.emacs.d`, `~/.tmux.conf`, `~/.zshrc`, and `~/.p10k.zsh` files/directories.
+1. Delete/move all existing `emacs` and `zsh` files/directories.
 1. Open your shell and run `stow /path/to/dotfiles`.
 1. Configure `emacs`.
    1. Open `emacs`.
