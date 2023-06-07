@@ -61,8 +61,9 @@
   ;; `TAB' indents correctly with spaces.
   (setq-default indent-tabs-mode nil)
 
-  ;; Toggle menu-bar off.
+  ;; Toggle top bars off.
   (menu-bar-mode -1)
+  (tool-bar-mode -1)
 
   ;; Bind "C-c o" to swap between C/C++ source and header files.
   ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
