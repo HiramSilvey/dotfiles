@@ -61,9 +61,10 @@
   ;; `TAB' indents correctly with spaces.
   (setq-default indent-tabs-mode nil)
 
-  ;; Toggle top bars off.
+  ;; Toggle unnecessary UI bars off.
   (menu-bar-mode -1)
   (tool-bar-mode -1)
+  (scroll-bar-mode -1)
 
   ;; Bind "C-c o" to swap between C/C++ source and header files.
   ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
@@ -151,7 +152,8 @@
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :config (setq vterm-buffer-name-string "<vterm>%s"))
 
 ;; Allow multiple vterm buffers.
 (use-package multi-vterm
