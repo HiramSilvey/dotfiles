@@ -20,7 +20,7 @@
 ;; Enable VERTical Interactive COmpletion.
 (use-package vertico
   :ensure t
-  :config (vertico-mode))
+  :init (vertico-mode))
 
 ;; Optionally use the `orderless' completion style. See
 ;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
@@ -40,15 +40,15 @@
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :config (savehist-mode))
+  :init (savehist-mode))
 
 ;; Enable richer vertico annotations using the marginalia package.
 (use-package marginalia
   :ensure t
+  :init (marginalia-mode)
   ;; Bind `marginalia-cycle' only in the minibuffer
   :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle))
-  :config (marginalia-mode))
+              ("M-A" . marginalia-cycle)))
 
 ;; Additional useful vertico & misc configurations.
 (use-package emacs
@@ -76,9 +76,14 @@
                      (local-set-key (kbd "C-c o") 'ff-find-other-file))))
 
   ;; Add prompt indicator to `completing-read-multiple'.
-  ;; Alternatively try `consult-completing-read-multiple'.
+  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
   (defun crm-indicator (args)
-    (cons (concat "[CRM] " (car args)) (cdr args)))
+    (cons (format "[CRM%s] %s"
+                  (replace-regexp-in-string
+                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                   crm-separator)
+                  (car args))
+          (cdr args)))
   (advice-add 'completing-read-multiple :filter-args 'crm-indicator)
 
   ;; Do not allow the cursor in the minibuffer prompt
@@ -107,13 +112,13 @@
 
 ;; Highlight TODO keywords.
 (use-package hl-todo
-  :ensure t
-  :config (hl-todo-mode))
+  :init (hl-todo-mode)
+  :ensure t)
 
 ;; Enable a snazzy modeline.
 (use-package doom-modeline
-  :ensure t
-  :config (doom-modeline-mode 1))
+  :init (doom-modeline-mode 1)
+  :ensure t)
 
 ;; Temporarily highlight modified regions.
 (use-package goggles
@@ -131,24 +136,20 @@
 
 ;; Highlight VC changes in the lefthand gutter.
 (use-package diff-hl
-  :ensure t
-  :config (global-diff-hl-mode))
+  :init (global-diff-hl-mode)
+  :ensure t)
 
 ;; Improved, yet simple, undo + redo functionality.
 (use-package undo-fu
   :ensure t
-  :config
-  (global-unset-key (kbd "C-/"))
-  (global-unset-key (kbd "M-_"))
-  (global-set-key (kbd "C-/")   'undo-fu-only-undo)
-  (global-set-key (kbd "M-_")   'undo-fu-only-redo))
+  :bind (("C-/" . undo-fu-only-undo)
+         ("M-_" . unfo-fu-only-redo)))
 
 ;; Undo + redo across emacs sessions.
 (use-package undo-fu-session
   :ensure t
-  :config
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (undo-fu-session-global-mode))
+  :init (undo-fu-session-global-mode)
+  :config (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
@@ -158,13 +159,12 @@
 ;; Allow multiple vterm buffers.
 (use-package multi-vterm
   :ensure t
-  :config
-  (global-set-key (kbd "C-c t") 'multi-vterm))
+  :bind ("C-c t" . multi-vterm))
 
 ;; Syntax checker.
 (use-package flycheck
   :ensure t
-  :config (global-flycheck-mode))
+  :init (global-flycheck-mode))
 
 (use-package flycheck-popup-tip
   :ensure t
@@ -207,14 +207,13 @@
 ;; Project-level interaction library.
 (use-package projectile
   :ensure t
-  :config
-  (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  :init (projectile-mode +1)
+  :bind (:map projectile-mode-map ("C-c p" . projectile-command-map)))
 
 ;; Help navigate keybindings.
 (use-package which-key
   :ensure t
-  :config (which-key-mode))
+  :init (which-key-mode))
 
 ;; Featureful LSP support.
 (use-package lsp-mode
@@ -291,7 +290,7 @@
 ;; Differentiate code buffers from everything else.
 (use-package solaire-mode
   :ensure t
-  :config (solaire-global-mode +1))
+  :init (solaire-global-mode +1))
 
 ;; Pretty theme.
 (use-package doom-themes
