@@ -8,6 +8,7 @@
 (package-initialize)
 
 ;; Bootstrap `use-package'.
+(require 'gnutls)
 (eval-after-load 'gnutls
   '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
 (unless (package-installed-p 'use-package)
@@ -50,6 +51,9 @@
   :bind (:map minibuffer-local-map
               ("M-A" . marginalia-cycle)))
 
+;; Vertico dependency.
+(use-package crm)
+
 ;; Additional useful vertico & misc configurations.
 (use-package emacs
   :init
@@ -69,9 +73,10 @@
   ;; Bind "C-c o" to swap between C/C++ source and header files.
   ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
   ;; other languages.
-  (dolist (hook '(c-ts-mode-hook
+  (dolist (hook '(c-common-mode-hook
                   c++-ts-mode-hook
-                  c-or-c++-ts-mode-hook))
+                  c-or-c++-ts-mode-hook
+                  c-ts-mode-hook))
     (add-hook hook (lambda()
                      (local-set-key (kbd "C-c o") 'ff-find-other-file))))
 
@@ -219,17 +224,16 @@
 (use-package lsp-mode
   :ensure t
   :commands lsp
+  :init (setq lsp-keymap-prefix "C-c l")
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
-  ((c++-mode c++-ts-mode rust-mode rust-ts-mode) . lsp)
-  :config
-  (setq lsp-keymap-prefix "C-c l")
-  (define-key lsp-mode-map (kbd "C-c l") lsp-command-map))
+  ((c++-mode c++-ts-mode rust-mode rust-ts-mode) . lsp))
 
 ;; `lsp-mode' supported debugger.
 (use-package dap-mode
   :ensure t
   :after lsp-mode
+  :functions ('dap-register-debug-template)
   ;; Support debugging Rust.
   :config (dap-register-debug-template "Rust::GDB Run Configuration"
                                        (list :type "gdb"
@@ -242,6 +246,7 @@
 ;; Prefer tree-sitter enabled modes when installed.
 (use-package treesit-auto
   :ensure t
+  :functions ('global-treesit-auto-mode)
   :config
   (setq treesit-auto-install 'prompt)
   (global-treesit-auto-mode))
