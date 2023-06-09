@@ -1,4 +1,4 @@
-;;; init.el -- Hiram's configuration
+;;; init.el -- Hiram's configuration.
 ;;; Commentary:
 ;;; Code:
 
@@ -18,314 +18,110 @@
 (require 'bind-key)
 (setq use-package-always-ensure t)
 
-;; Enable VERTical Interactive COmpletion.
-(use-package vertico
-  :ensure t
-  :init (vertico-mode))
-
-;; Optionally use the `orderless' completion style. See
-;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
-;; dispatcher. Additionally enable `partial-completion' for file path
-;; expansion. `partial-completion' is important for wildcard support.
-;; Multiple files can be opened at once with `find-file' if you enter a
-;; wildcard. You may also give the `initials' completion style a try.
-(use-package orderless
-  :ensure t
-  :init
-  ;; Configure a custom style dispatcher (see the Consult wiki)
-  ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-  ;;       orderless-component-separator 'orderless-escapable-split-on-space)
-  (setq completion-styles '(orderless)
-        completion-category-defaults nil
-        completion-category-overrides '((file (styles partial-completion)))))
-
-;; Persist history over Emacs restarts. Vertico sorts by history position.
-(use-package savehist
-  :init (savehist-mode))
-
-;; Enable richer vertico annotations using the marginalia package.
-(use-package marginalia
-  :ensure t
-  :init (marginalia-mode)
-  ;; Bind `marginalia-cycle' only in the minibuffer
-  :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle)))
-
-;; Vertico dependency.
-(use-package crm)
-
-;; Additional useful vertico & misc configurations.
 (use-package emacs
   :init
-  ;; Powerlevel10k-compatible font.
-  (set-face-attribute 'default nil :font "MesloLGS NF" :height 143)
-  ;; Default unicode fallback font.
-  (set-fontset-font "fontset-default" 'unicode "Noto Sans Symbols 2")
-
-  ;; `TAB' indents correctly with spaces.
-  (setq-default indent-tabs-mode nil)
-
-  ;; Toggle unnecessary UI bars off.
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-
-  ;; Bind "C-c o" to swap between C/C++ source and header files.
-  ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
-  ;; other languages.
-  (dolist (hook '(c-common-mode-hook
-                  c++-ts-mode-hook
-                  c-or-c++-ts-mode-hook
-                  c-ts-mode-hook))
-    (add-hook hook (lambda()
-                     (local-set-key (kbd "C-c o") 'ff-find-other-file))))
-
-  ;; Add prompt indicator to `completing-read-multiple'.
-  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
-  (defun crm-indicator (args)
-    (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args)))
-  (advice-add 'completing-read-multiple :filter-args 'crm-indicator)
-
-  ;; Do not allow the cursor in the minibuffer prompt
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook 'cursor-intangible-mode)
-
-  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-  ;; Vertico commands are hidden in normal buffers.
-  (setq read-extended-command-predicate
-        'command-completion-default-include-p)
-
-  ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t)
-
-  ;; Remove extra whitespace on file save.
-  (add-hook 'before-save-hook 'whitespace-cleanup)
-
-  ;; Consolidate backup file location.
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  (load "~/.emacs.d/language.el")
+  (load "~/.emacs.d/search.el")
+  (load "~/.emacs.d/tools.el")
+  (load "~/.emacs.d/ui.el")
+  (load "~/.emacs.d/utility.el")
 
   ;; Load local file configurations if present.
   (if (file-readable-p "~/.emacs.d/local.el")
-      (load "~/.emacs.d/local.el"))
-  )
-
-;; Highlight TODO keywords.
-(use-package hl-todo
-  :init (hl-todo-mode)
-  :ensure t)
-
-;; Enable a snazzy modeline.
-(use-package doom-modeline
-  :init (doom-modeline-mode 1)
-  :ensure t)
-
-;; Temporarily highlight modified regions.
-(use-package goggles
-  :ensure t
-  :hook ((prog-mode text-mode) . goggles-mode)
-  :config (setq-default goggles-pulse t))  ;; set to nil to disable pulsing
-
-;; Extra dired colors.
-(use-package diredfl
-  :ensure t)
-
-;; Dired using fd.
-(use-package fd-dired
-  :ensure t)
-
-;; Highlight VC changes in the lefthand gutter.
-(use-package diff-hl
-  :init (global-diff-hl-mode)
-  :ensure t)
-
-;; Improved, yet simple, undo + redo functionality.
-(use-package undo-fu
-  :ensure t
-  :bind (("C-/" . undo-fu-only-undo)
-         ("M-_" . unfo-fu-only-redo)))
-
-;; Undo + redo across emacs sessions.
-(use-package undo-fu-session
-  :ensure t
-  :init (undo-fu-session-global-mode)
-  :config (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
-
-;; Blazingly fast terminal emulator.
-(use-package vterm
-  :ensure t
-  :config (setq vterm-buffer-name-string "<vterm>%s"))
-
-;; Allow multiple vterm buffers.
-(use-package multi-vterm
-  :ensure t
-  :bind ("C-c t" . multi-vterm))
-
-;; Syntax checker.
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-
-(use-package flycheck-popup-tip
-  :ensure t
-  :after flycheck
-  :hook (flycheck-mode . flycheck-popup-tip-mode))
-
-;; Dead-simple xref lookups.
-(use-package dumb-jump
-  :ensure t
-  :config (add-hook 'xref-backend-functions 'dumb-jump-xref-activate))
-
-;; Git support.
-(use-package magit
-  :ensure t)
-
-;; Org mode!
-(use-package org
-  :ensure t
-  :config
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)"))))
-
-;; Highlight code parentheses.
-(use-package highlight-parentheses
-  :ensure t
-  :hook (prog-mode . highlight-parentheses-mode))
-
-;; COMPlete ANYthing.
-(use-package company
-  :ensure t
-  :hook (after-init . global-company-mode))
-
-;; Ensure exec-path matches the shell $PATH
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (setq exec-path-from-shell-arguments nil)
-  (exec-path-from-shell-initialize))
-
-;; Project-level interaction library.
-(use-package projectile
-  :ensure t
-  :init (projectile-mode +1)
-  :bind (:map projectile-mode-map ("C-c p" . projectile-command-map)))
-
-;; Help navigate keybindings.
-(use-package which-key
-  :ensure t
-  :init (which-key-mode))
-
-;; Featureful LSP support.
-(use-package lsp-mode
-  :ensure t
-  :commands lsp
-  :init (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (lsp-mode . lsp-enable-which-key-integration)
-  ((c++-mode c++-ts-mode rust-mode rust-ts-mode) . lsp))
-
-;; `lsp-mode' supported debugger.
-(use-package dap-mode
-  :ensure t
-  :after lsp-mode
-  :functions ('dap-register-debug-template)
-  ;; Support debugging Rust.
-  :config (dap-register-debug-template "Rust::GDB Run Configuration"
-                                       (list :type "gdb"
-                                             :request "launch"
-                                             :name "GDB::Run"
-                                             :gdbpath "rust-gdb"
-                                             :target nil
-                                             :cwd nil)))
-
-;; Prefer tree-sitter enabled modes when installed.
-(use-package treesit-auto
-  :ensure t
-  :functions ('global-treesit-auto-mode)
-  :config
-  (setq treesit-auto-install 'prompt)
-  (global-treesit-auto-mode))
-
-;; Auto-format clang supported languages on save.
-(use-package clang-format
-  :ensure t
-  :init (defun clang-format-on-save ()
-          (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
-  :hook ((c++-ts-mode
-          c-or-c++-ts-mode
-          c-ts-mode
-          csharp-ts-mode
-          java-ts-mode
-          js-ts-mode
-          json-ts-mode)
-         . clang-format-on-save))
-
-;; Add support for Rust code.
-(use-package rust-mode
-  :ensure t
-  :hook ((rust-mode rust-ts-mode) . rust-format-on-save))
-
-;; Add support for Cargo configuration files.
-(use-package cargo-mode
-  :ensure t
-  :hook ((rust-mode rust-ts-mode) . cargo-minor-mode))
-
-;; Add support for Markdown files.
-(use-package markdown-mode
-  :ensure t
-  :config (setq markdown-command '("pandoc" "--from=markdown" "--to=html5")))
-
-;; Pretty icons.
-(use-package all-the-icons
-  :ensure t)
-(use-package all-the-icons-dired
-  :ensure t
-  :after all-the-icons
-  :hook (dired-mode . all-the-icons-dired-mode))
-
-;; Icons needed for `doom-modeline'.
-(use-package nerd-icons
-  :ensure t)
-
-;; Differentiate code buffers from everything else.
-(use-package solaire-mode
-  :ensure t
-  :init (solaire-global-mode +1))
-
-;; Pretty theme.
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-gruvbox t)
-
-  ;; Enable flashing mode-line on errors.
-  (doom-themes-visual-bell-config)
-
-  ;; Corrects (and improves) org-mode's native fontification.
-  (doom-themes-org-config))
-
-;; Automatically update pending packages on startup. Checks for updates weekly.
-(use-package auto-package-update
-  :ensure t
-  :config (auto-package-update-maybe))
+      (load "~/.emacs.d/local.el")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(connection-local-criteria-alist
+   '(((:application tramp :protocol "flatpak")
+      tramp-container-connection-local-default-flatpak-profile)
+     ((:application tramp)
+      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)))
+ '(connection-local-profile-alist
+   '((tramp-container-connection-local-default-flatpak-profile
+      (tramp-remote-path "/app/bin" tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin"))
+     (tramp-connection-local-darwin-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . tramp-ps-time)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-busybox-ps-profile
+      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (user . string)
+       (group . string)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (ttname . string)
+       (time . tramp-ps-time)
+       (nice . number)
+       (etime . tramp-ps-time)
+       (args)))
+     (tramp-connection-local-bsd-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (group . string)
+       (comm . 52)
+       (state . string)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . number)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-default-shell-profile
+      (shell-file-name . "/bin/sh")
+      (shell-command-switch . "-c"))
+     (tramp-connection-local-default-system-profile
+      (path-separator . ":")
+      (null-device . "/dev/null"))))
+ '(package-selected-packages
+   '(highlight-indent-guides use-package vertico orderless marginalia hl-todo doom-modeline goggles diredfl fd-dired diff-hl undo-fu undo-fu-session multi-vterm flycheck-popup-tip dumb-jump highlight-parentheses company exec-path-from-shell clang-format rust-mode cargo-mode all-the-icons-dired doom-themes auto-package-update treesit-auto which-key dap-mode solaire-mode magit projectile git-modes expand-region)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 ;;; init.el ends here
