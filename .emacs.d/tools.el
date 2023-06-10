@@ -18,7 +18,8 @@
   :init (setq lsp-keymap-prefix "C-c l")
   :hook
   (lsp-mode . lsp-enable-which-key-integration)
-  ((c++-mode c++-ts-mode rust-mode rust-ts-mode) . lsp))
+  ((c++-mode c++-ts-mode rust-mode rust-ts-mode) . lsp)
+  :config (setq lsp-headerline-breadcrumb-segments '(symbols)))
 
 ;; `lsp-mode' supported debugger.
 (use-package dap-mode

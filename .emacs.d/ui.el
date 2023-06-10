@@ -50,11 +50,6 @@
   :init (hl-todo-mode)
   :ensure t)
 
-;; Draw vertical lines representing indent levels.
-(use-package highlight-indent-guides
-  :ensure t
-  :hook (prog-mode . highlight-indent-guides-mode))
-
 ;; Highlight code parentheses.
 (use-package highlight-parentheses
   :ensure t
