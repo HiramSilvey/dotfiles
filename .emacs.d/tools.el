@@ -2,15 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Syntax checker.
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-(use-package flycheck-popup-tip
-  :ensure t
-  :after flycheck
-  :hook (flycheck-mode . flycheck-popup-tip-mode))
-
 ;; Git support.
 (use-package magit
   :ensure t)

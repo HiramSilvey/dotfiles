@@ -10,10 +10,16 @@
   :after all-the-icons
   :hook (dired-mode . all-the-icons-dired-mode))
 
+;; Breadcrumbs within the modeline providing more information on the current
+;; cursor location.
+(use-package breadcrumb
+  :ensure t
+  :config (setq global-mode-string '(:eval (breadcrumb-imenu-crumbs))))
+
 ;; Highlight VC changes in the lefthand gutter.
 (use-package diff-hl
-  :init (global-diff-hl-mode)
-  :ensure t)
+  :ensure t
+  :init (global-diff-hl-mode))
 
 ;; Extra dired colors.
 (use-package diredfl
@@ -29,8 +35,8 @@
 (use-package doom-themes
   :ensure t
   :config
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (setq doom-themes-enable-bold t    ;; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ;; if nil, italics is universally disabled
   (load-theme 'doom-gruvbox t)
 
   ;; Enable flashing mode-line on errors.
