@@ -43,14 +43,6 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
-;; Prefer tree-sitter enabled modes when installed.
-(use-package treesit-auto
-  :ensure t
-  :functions (global-treesit-auto-mode)
-  :config
-  (setq treesit-auto-install 'prompt)
-  (global-treesit-auto-mode))
-
 ;; Improved, yet simple, undo + redo functionality.
 (use-package undo-fu
   :ensure t
