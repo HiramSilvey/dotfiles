@@ -4,6 +4,7 @@
 .emacs.d/backups/
 .emacs.d/eln-cache/
 .emacs.d/elpa/
+.emacs.d/eshell/
 .emacs.d/history
 .emacs.d/places
 .emacs.d/transient/
