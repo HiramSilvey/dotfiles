@@ -8,9 +8,9 @@
 
 ;; Emacs shell customization.
 (use-package eshell
-  :bind (("C-c s" . eshell-new)
-         :map eshell-mode-map
-         ("C-d" . eshell-life-is-too-much)))
+  :bind ("C-c s" . eshell-new)
+  :hook (eshell-mode . (lambda ()
+                         (local-set-key (kbd "C-d") 'eshell-life-is-too-much))))
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
