@@ -2,6 +2,7 @@
 
 ## Prerequisites
 
+* [Sway](https://swaywm.org/)
 * [Zsh](https://www.zsh.org/)
   * [Oh My Zsh](https://ohmyz.sh/)
     * [Powerlevel10k](https://github.com/romkatv/powerlevel10k#oh-my-zsh)
