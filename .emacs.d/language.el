@@ -19,9 +19,10 @@
 ;; Org mode!
 (use-package org
   :ensure t
+  :bind ("C-c a" . org-agenda)
   :config
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "DOING(d)" "|" "DONE(D)" "CANCELED(x@)"))))
+        '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)"))))
 
 ;; Support Rust.
 (use-package rust-mode
