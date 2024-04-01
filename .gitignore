@@ -6,7 +6,9 @@
 .emacs.d/elpa/
 .emacs.d/eshell/
 .emacs.d/history
+.emacs.d/local.el
 .emacs.d/places
+.emacs.d/tramp
 .emacs.d/transient/
 .emacs.d/undo-fu-session/
 projectile-bookmarks.eld

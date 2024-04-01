@@ -4,7 +4,8 @@
 
 ;; Git support.
 (use-package magit
-  :ensure t)
+  :ensure t
+  :config (setq magit-define-global-key-bindings 'recommended))
 
 ;; Emacs shell customization.
 (use-package eshell

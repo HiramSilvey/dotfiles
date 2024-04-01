@@ -20,7 +20,7 @@ set $shell emacsclient --create-frame --alternate-editor "" --eval "(eshell-new)
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu j4-dmenu-desktop --dmenu='bemenu -i' --term='emacsclient --create-frame --alternate-editor "" --eval "(multi-vterm)"' | xargs swaymsg exec --
 
 ### Output configuration
 #

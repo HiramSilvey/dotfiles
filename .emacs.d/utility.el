@@ -77,6 +77,10 @@
   (add-hook 'before-save-hook 'whitespace-cleanup)
 
   ;; Consolidate backup file location.
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups"))))
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+  ;; Always save an auth-source entry for further use by additional auth-source
+  ;; backends.
+  (setq auth-source-save-behavior nil))
 
 ;;; utility.el ends here
