@@ -21,6 +21,8 @@ set $shell emacsclient --create-frame --alternate-editor "" --eval "(eshell-new)
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu j4-dmenu-desktop --dmenu='bemenu -i' --term='emacsclient --create-frame --alternate-editor "" --eval "(multi-vterm)"' | xargs swaymsg exec --
+# Screen locker
+set $lock swaylock -f -c 000000
 
 ### Output configuration
 #
@@ -37,11 +39,11 @@ output * bg /home/hiram/Pictures/zenitsu.jpg fill
 #
 # Example configuration:
 #
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
+exec swayidle -w \
+         timeout 300 'swaylock -f -c 000000' \
+         timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+         before-sleep 'swaylock -f -c 000000'
+
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
@@ -82,6 +84,9 @@ output * bg /home/hiram/Pictures/zenitsu.jpg fill
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
     floating_modifier $mod normal
+
+    # Lock the screen
+    bindsym $mod+l exec $lock
 
     # Reload the configuration file
     bindsym $mod+Shift+c reload
