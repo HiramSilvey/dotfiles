@@ -6,12 +6,6 @@
 (use-package fd-dired
   :ensure t)
 
-;; Project-level interaction library.
-(use-package projectile
-  :ensure t
-  :init (projectile-mode +1)
-  :bind (:map projectile-mode-map ("C-c p" . projectile-command-map)))
-
 ;; VERTical Interactive COmpletion.
 (use-package vertico
   :ensure t
