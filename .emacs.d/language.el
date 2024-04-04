@@ -29,13 +29,6 @@
   :ensure t
   :hook ((rust-mode rust-ts-mode) . rust-format-on-save))
 
-;; Support GDScript, the default language for the Godot Game Engine.
-(use-package gdscript-mode
-  :ensure t
-  :hook ((gdscript-mode gdscript-ts-mode) . (lambda()
-           (add-hook 'before-save-hook 'gdscript-format)
-           (eglot-ensure))))
-
 (use-package emacs
   :init
   ;; Bind "C-c o" to swap between C/C++ source and header files.
