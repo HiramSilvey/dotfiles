@@ -13,6 +13,8 @@
     * [autoupdate-oh-my-zsh-plugins](https://github.com/tamcore/autoupdate-oh-my-zsh-plugins)
 * [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 29)
   * [emacs-libvterm dependencies](https://github.com/akermu/emacs-libvterm#requirements)
+  * [Go](https://go.dev/doc/install)
+    * [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
 * [GNU Stow](https://www.gnu.org/software/stow/)
 
 ## Steps
