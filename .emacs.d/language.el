@@ -29,6 +29,11 @@
   :ensure t
   :hook ((rust-mode rust-ts-mode) . rust-format-on-save))
 
+;; Support Go.
+(use-package go-mode
+  :ensure t
+  :hook (before-save . gofmt-before-save)
+
 (use-package emacs
   :init
   ;; Bind "C-c o" to swap between C/C++ source and header files.
