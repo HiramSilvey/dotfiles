@@ -32,7 +32,16 @@
 ;; Support Go.
 (use-package go-mode
   :ensure t
-  :hook (before-save . gofmt-before-save)
+  :config
+  ;; Global Go language server configuration.
+  (setq-default eglot-workspace-configuration
+    '((:gopls .
+        ((staticcheck . t)
+         (matcher . "CaseSensitive")))))
+  :hook
+  (before-save . (lambda ()
+                   (call-interactively 'eglot-code-action-organize-imports)))
+  (before-save . gofmt-before-save))
 
 (use-package emacs
   :init
