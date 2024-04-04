@@ -13,7 +13,6 @@
     * [autoupdate-oh-my-zsh-plugins](https://github.com/tamcore/autoupdate-oh-my-zsh-plugins)
 * [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 29)
   * [emacs-libvterm dependencies](https://github.com/akermu/emacs-libvterm#requirements)
-  * [GDScript formatting dependencies](https://github.com/godotengine/emacs-gdscript-mode#formatting-code-with-gdformat)
 * [GNU Stow](https://www.gnu.org/software/stow/)
 
 ## Steps
