@@ -17,6 +17,11 @@
                    (local-set-key (kbd "C-d") 'eshell-life-is-too-much)
                    (setq-local company-idle-delay nil))))
 
+;; Fish-like autosuggestions in eshell!
+(use-package capf-autosuggest
+  :ensure t
+  :hook ((comint-mode eshell-mode) . capf-autosuggest-mode))
+
 ;; Blazingly fast terminal emulator.
 (use-package vterm
   :ensure t
