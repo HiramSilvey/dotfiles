@@ -43,13 +43,6 @@
                    (call-interactively 'eglot-code-action-organize-imports)))
   (before-save . gofmt-before-save))
 
-;; Support Pyright LSP.
-(use-package lsp-pyright
-  :ensure t
-  :hook ((python-mode python-ts-mode) . (lambda ()
-                                          (require 'lsp-pyright)
-                                          (lsp))))  ; or lsp-deferred
-
 (use-package emacs
   :init
   ;; Bind "C-c o" to swap between C/C++ source and header files.
