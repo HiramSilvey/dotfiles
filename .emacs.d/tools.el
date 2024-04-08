@@ -9,13 +9,14 @@
 
 ;; Emacs shell customization.
 (use-package eshell
-  :bind (("C-c s" . eshell-new)
-         :map company-mode-map
-         ([tab] . company-complete-common))
+  :bind ("C-c s" . eshell-new)
   :hook
   (eshell-mode . (lambda ()
-                   (local-set-key (kbd "C-d") 'eshell-life-is-too-much)
-                   (setq-local company-idle-delay nil))))
+                   ;; Disable auto company pop-up and instead bind it to TAB.
+                   (setq-local company-idle-delay nil)
+                   (local-set-key [tab] 'company-complete-common)
+                   ;; Add binding to exit eshell quickly.
+                   (local-set-key (kbd "C-d") 'eshell-life-is-too-much))))
 
 ;; Fish-like autosuggestions in eshell!
 (use-package capf-autosuggest
