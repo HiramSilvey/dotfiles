@@ -21,21 +21,14 @@
   :ensure t
   :hook (org-mode . visual-line-mode)  ;; Wrap lines visually.
   :bind ("C-c a" . org-agenda)
+  :custom
+  (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
+  (org-log-into-drawer t "Add state change log lines into hidden drawers by default.")
+  (org-log-done 'time "Log the time tasks are completed.")
+  (org-agenda-start-with-log-mode t "Full day log in agenda view.")
+  (org-ellipsis " ▾" "Update end-of-line elipsis to a nicer-looking arrow.")
+  (org-startup-indented t "Display lines as intented for a cleaner view.")
   :config
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
-
-  ;; Add state change log lines into hidden drawers by default.
-  (setq org-log-into-drawer t)
-
-  ;; Log the time tasks are completed and keep them in the agenda view.
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-log-done 'time)
-
-  ;; Minor visual tweaks.
-  (setq org-ellipsis " ▾")
-  (setq org-startup-indented t)
-
   ;; Replace list hyphen with bullet visually.
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
