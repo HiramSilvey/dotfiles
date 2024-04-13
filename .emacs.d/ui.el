@@ -14,7 +14,7 @@
 ;; cursor location.
 (use-package breadcrumb
   :ensure t
-  :config (setq global-mode-string '(:eval (breadcrumb-imenu-crumbs))))
+  :custom (global-mode-string '(:eval (breadcrumb-imenu-crumbs))))
 
 ;; Highlight VC changes in the lefthand gutter.
 (use-package diff-hl
@@ -29,14 +29,15 @@
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1)
-  :config (setq column-number-mode t))
+  :custom (column-number-mode t "Display in which column the cursor is."))
 
 ;; Pretty theme.
 (use-package doom-themes
   :ensure t
+  :custom
+  (doom-themes-enable-bold t "Universally enable bold.")
+  (doom-themes-enable-italic t "Universally enable italics.")
   :config
-  (setq doom-themes-enable-bold t    ;; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ;; if nil, italics is universally disabled
   (load-theme 'doom-gruvbox t)
 
   ;; Enable flashing mode-line on errors.

@@ -34,9 +34,8 @@
 ;; Ensure exec-path matches the shell $PATH
 (use-package exec-path-from-shell
   :ensure t
-  :config
-  (setq exec-path-from-shell-arguments nil)
-  (exec-path-from-shell-initialize))
+  :custom (exec-path-from-shell-arguments nil)
+  :config (exec-path-from-shell-initialize))
 
 ;; Select region outwards.
 (use-package expand-region
@@ -47,9 +46,9 @@
 (use-package treesit-auto
   :ensure t
   :functions (global-treesit-auto-mode)
-  :config
-  (setq treesit-auto-install 'prompt)
-  (global-treesit-auto-mode))
+  :custom (treesit-auto-install
+           'prompt "Prompt to auto-install missing tree-sitter grammars.")
+  :config (global-treesit-auto-mode))
 
 ;; Improved, yet simple, undo + redo functionality.
 (use-package undo-fu
@@ -61,7 +60,7 @@
 (use-package undo-fu-session
   :ensure t
   :init (undo-fu-session-global-mode)
-  :config (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+  :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 ;; Help navigate keybindings.
 (use-package which-key

@@ -14,7 +14,7 @@
 ;; Support Markdown.
 (use-package markdown-mode
   :ensure t
-  :config (setq markdown-command '("pandoc" "--from=markdown" "--to=html5")))
+  :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))
 
 ;; Org mode!
 (use-package org

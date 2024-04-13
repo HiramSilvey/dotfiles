@@ -5,7 +5,8 @@
 ;; Git support.
 (use-package magit
   :ensure t
-  :config (setq magit-define-global-key-bindings 'recommended))
+  :custom (magit-define-global-key-bindings
+           'recommended "Use magit recommended C-c keybindings."))
 
 ;; Emacs shell customization.
 (use-package eshell
@@ -26,7 +27,8 @@
 ;; Blazingly fast terminal emulator.
 (use-package vterm
   :ensure t
-  :config (setq vterm-buffer-name-string "<vterm>%s"))
+  :custom (vterm-buffer-name-string
+           "<vterm>%s" "Mark vterm buffer names with a prefix."))
 
 ;; Allow multiple vterm buffers.
 (use-package multi-vterm
