@@ -28,6 +28,10 @@
   ;; Add state change log lines into hidden drawers by default.
   (setq org-log-into-drawer t)
 
+  ;; Log the time tasks are completed and keep them in the agenda view.
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+
   ;; Minor visual tweaks.
   (setq org-ellipsis " ▾")
   (setq org-startup-indented t)
