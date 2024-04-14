@@ -29,6 +29,15 @@
   (org-ellipsis " ▾" "Update end-of-line elipsis to a nicer-looking arrow.")
   (org-startup-indented t "Display lines as intented for a cleaner view.")
   :config
+
+  ;; Load local agenda file list if present.
+  (let ((hs/agenda-files "~/.emacs.d/agenda_files.txt"))
+    (if (file-readable-p hs/agenda-files)
+        (setq org-agenda-files
+              (with-temp-buffer
+                (insert-file-contents hs/agenda-files)
+                (split-string (buffer-string) "\n" t)))))
+
   ;; Replace list hyphen with bullet visually.
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
