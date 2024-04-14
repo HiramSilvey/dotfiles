@@ -1,5 +1,6 @@
 .emacs.d/.last-package-update-day
 .emacs.d/.lsp*
+.emacs.d/agenda_files.txt
 .emacs.d/auto-save-list/
 .emacs.d/backups/
 .emacs.d/eln-cache/
