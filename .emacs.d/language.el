@@ -19,8 +19,10 @@
 ;; Org mode!
 (use-package org
   :ensure t
+  :bind
+  ("C-c a" . org-agenda)
+  ("C-c c" . org-capture)
   :hook (org-mode . visual-line-mode)  ;; Wrap lines visually.
-  :bind ("C-c a" . org-agenda)
   :custom
   (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
   (org-log-into-drawer t "Add state change log lines into hidden drawers by default.")
