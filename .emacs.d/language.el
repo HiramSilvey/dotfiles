@@ -30,6 +30,7 @@
   (org-agenda-start-with-log-mode t "Full day log in agenda view.")
   (org-ellipsis " ▾" "Update end-of-line elipsis to a nicer-looking arrow.")
   (org-startup-indented t "Display lines as intented for a cleaner view.")
+  (org-archive-location "~/Documents/Org/archive.org::datetree/")
   :config
 
   ;; Load local agenda file list if present.
