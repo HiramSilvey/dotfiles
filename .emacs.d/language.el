@@ -31,6 +31,9 @@
   (org-ellipsis " ▾" "Update end-of-line elipsis to a nicer-looking arrow.")
   (org-startup-indented t "Display lines as intented for a cleaner view.")
   (org-archive-location "~/Documents/Org/archive.org::datetree/")
+  (org-priority-highest 65 "ASCII value of 'A'.")
+  (org-priority-lowest 68 "ASCII value of 'D'.")
+  (org-priority-default 67 "ASCII value of 'C'.")
   :config
 
   ;; Load local agenda file list if present.
