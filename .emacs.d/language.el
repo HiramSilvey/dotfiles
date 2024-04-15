@@ -38,6 +38,20 @@
                 (insert-file-contents hs/agenda-files)
                 (split-string (buffer-string) "\n" t)))))
 
+  (setq org-capture-templates
+        `(("b" "Bookmark" entry (file "~/Documents/Org/bookmarks.org")
+           "* [[%^{Link}][%^{Description}]]" :immediate-finish t)
+
+          ;; TODO: Sort the whole file automatically after inserting new term.
+          ("g" "Glossary term" entry (file "~/Documents/Org/glossary.org")
+           "* %^{Term}: %^{Definition}" :immediate-finish t)
+
+          ("t" "Task" entry (file+olp "~/Documents/Org/tasks.org" "Inbox" "Tasks")
+           "* TODO %?\n%U")
+
+          ("n" "Note" item (file+olp "~/Documents/Org/tasks.org" "Inbox" "Notes")
+           "- %?\n  %U\n")))
+
   ;; Replace list hyphen with bullet visually.
   (font-lock-add-keywords 'org-mode
                           '(("^ *\\([-]\\) "
