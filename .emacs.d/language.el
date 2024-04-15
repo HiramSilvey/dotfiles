@@ -34,6 +34,12 @@
   (org-priority-highest 65 "ASCII value of 'A'.")
   (org-priority-lowest 68 "ASCII value of 'D'.")
   (org-priority-default 67 "ASCII value of 'C'.")
+  (org-priority-faces
+      '((?A . '(org-priority))
+        (?B . '(:foreground "dark orange"))
+        (?C . '(shadow))
+        (?D . '(shadow)))
+      "Differentiate priorities visually.")
   :config
 
   ;; Load local agenda file list if present.
