@@ -30,7 +30,7 @@
   (org-agenda-start-with-log-mode t "Full day log in agenda view.")
   (org-ellipsis " ▾" "Update end-of-line elipsis to a nicer-looking arrow.")
   (org-startup-indented t "Display lines as intented for a cleaner view.")
-  (org-agenda-files '("~/Documents/Org/tasks.org"))
+  (org-agenda-files '("~/Documents/Org/tasks.org" "~/Documents/Org/notes.org"))
   (org-archive-location "~/Documents/Org/archive.org::datetree/")
   (org-priority-highest 65 "ASCII value of 'A'.")
   (org-priority-lowest 68 "ASCII value of 'D'.")
