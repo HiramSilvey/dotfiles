@@ -30,6 +30,7 @@
   (org-agenda-start-with-log-mode t "Full day log in agenda view.")
   (org-ellipsis " ▾" "Update end-of-line elipsis to a nicer-looking arrow.")
   (org-startup-indented t "Display lines as intented for a cleaner view.")
+  (org-agenda-files '("~/Documents/Org/tasks.org"))
   (org-archive-location "~/Documents/Org/archive.org::datetree/")
   (org-priority-highest 65 "ASCII value of 'A'.")
   (org-priority-lowest 68 "ASCII value of 'D'.")
@@ -41,15 +42,6 @@
         (?D . '(shadow)))
       "Differentiate priorities visually.")
   :config
-
-  ;; Load local agenda file list if present.
-  (let ((hs/agenda-files "~/.emacs.d/agenda_files.txt"))
-    (if (file-readable-p hs/agenda-files)
-        (setq org-agenda-files
-              (with-temp-buffer
-                (insert-file-contents hs/agenda-files)
-                (split-string (buffer-string) "\n" t)))))
-
   (setq org-capture-templates
         `(("b" "Bookmark" entry (file "~/Documents/Org/bookmarks.org")
            "* [[%^{Link}][%^{Description}]]" :immediate-finish t)
