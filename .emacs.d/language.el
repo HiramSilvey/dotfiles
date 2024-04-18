@@ -44,17 +44,17 @@
   :config
   (setq org-capture-templates
         `(("b" "Bookmark" entry (file+olp "~/Documents/Org/bookmarks.org" "Inbox")
-           "* [[%^{Link}][%^{Description}]]" :immediate-finish t)
+           "* [[%^{Link}][%^{Title}]]" :immediate-finish t)
 
           ;; TODO: Sort the whole file automatically after inserting new term.
           ("g" "Glossary term" entry (file "~/Documents/Org/glossary.org")
-           "* %^{Term}: %^{Definition}" :immediate-finish t)
+           "* %^{Term}: %^{Definition}")
 
-          ("t" "Task" entry (file+olp "~/Documents/Org/tasks.org" "Inbox" "Tasks")
+          ("t" "Task" entry (file+olp "~/Documents/Org/tasks.org" "Inbox")
            "* TODO %?\n%U")
 
-          ("n" "Note" item (file+olp "~/Documents/Org/tasks.org" "Inbox" "Notes")
-           "- %?\n  %U\n")))
+          ("n" "Note" entry (file+olp+datetree "~/Documents/Org/notes.org")
+           "* %<%H:%M> %^g\n%?")))
 
   ;; Replace list hyphen with bullet visually.
   (font-lock-add-keywords 'org-mode
