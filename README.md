@@ -17,7 +17,7 @@
     * [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
 * [GNU Stow](https://www.gnu.org/software/stow/)
 
-<a name="footnote1">1</a> Compiling emacs from source:
+<a name="footnote1">1</a> Compiling `emacs` from source:
 ```console
 git clone https://git.savannah.gnu.org/cgit/emacs.git && cd emacs
 ```
