@@ -54,7 +54,7 @@
            "* TODO %?\n%U")
 
           ("n" "Note" entry (file+olp+datetree "~/Documents/Org/notes.org")
-           "* %<%H:%M> %^g\n%?")))
+           "* %<%F %a %H:%M> %^g\n%?")))
 
   ;; Replace list hyphen with bullet visually.
   (font-lock-add-keywords 'org-mode
