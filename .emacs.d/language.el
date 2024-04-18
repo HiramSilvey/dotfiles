@@ -43,7 +43,7 @@
       "Differentiate priorities visually.")
   :config
   (setq org-capture-templates
-        `(("b" "Bookmark" entry (file "~/Documents/Org/bookmarks.org")
+        `(("b" "Bookmark" entry (file+olp "~/Documents/Org/bookmarks.org" "Inbox")
            "* [[%^{Link}][%^{Description}]]" :immediate-finish t)
 
           ;; TODO: Sort the whole file automatically after inserting new term.
