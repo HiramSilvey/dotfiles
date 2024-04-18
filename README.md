@@ -11,21 +11,26 @@
     * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
     * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
     * [autoupdate-oh-my-zsh-plugins](https://github.com/tamcore/autoupdate-oh-my-zsh-plugins)
-* [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 29)
-  <details>
-  <summary>Compiling from source</summary>
-  ```console
-  $ git clone https://git.savannah.gnu.org/cgit/emacs.git && cd emacs
-  $ ./autogen.sh
-  $ ./configure --without-compress-install --with-native-compilation --with-json --with-mailutils --with-pgtk --with-tree-sitter
-  $ make -j $(nproc)
-  ```
-  Note: When changing versions, run `git clean -d -f -x` before re-running the build commands above to remove previously generated files.
-  </details>
+* [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 29)<sup>[1](#footnote1)</sup>
   * [emacs-libvterm dependencies](https://github.com/akermu/emacs-libvterm#requirements)
   * [Go](https://go.dev/doc/install)
     * [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
 * [GNU Stow](https://www.gnu.org/software/stow/)
+
+<a name="footnote1">1</a> Compiling emacs from source:
+```console
+git clone https://git.savannah.gnu.org/cgit/emacs.git && cd emacs
+```
+```console
+./autogen.sh
+```
+```console
+./configure --without-compress-install --with-native-compilation --with-json --with-mailutils --with-pgtk --with-tree-sitter
+```
+```console
+make -j $(nproc)
+```
+Note: When changing versions, run `git clean -d -f -x` before re-running the build commands above to remove previously generated files.
 
 ## Steps
 
