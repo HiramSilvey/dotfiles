@@ -22,6 +22,13 @@
   (eshell-pre-command . eshell-append-history)
   :custom (eshell-save-history-on-exit nil))
 
+;; Make Emacs shell prompt pretty.
+(use-package eshell-prompt-extras
+  :ensure t
+  :custom
+  (eshell-highlight-prompt nil)
+  (eshell-prompt-function 'epe-theme-lambda))
+
 ;; Fish-like autosuggestions in eshell!
 (use-package capf-autosuggest
   :ensure t
