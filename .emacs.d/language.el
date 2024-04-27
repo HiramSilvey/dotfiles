@@ -9,6 +9,13 @@
 ;; Support Git configuration files.
 (use-package git-modes)
 
+;; Support Dockerfiles.
+(use-package dockerfile-mode)
+
+;; Support Terraform files.
+(use-package terraform-mode
+  :custom (terraform-format-on-save t))
+
 ;; Support Markdown.
 (use-package markdown-mode
   :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))

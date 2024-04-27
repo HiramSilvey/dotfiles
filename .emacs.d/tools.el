@@ -2,10 +2,14 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Git support.
+;; Git porcelain.
 (use-package magit
   :custom (magit-define-global-key-bindings
            'recommended "Use magit recommended C-c keybindings."))
+
+;; Docker support.
+(use-package docker
+  :bind ("C-c d" . docker))
 
 ;; Emacs shell customization.
 (use-package eshell
