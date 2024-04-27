@@ -2,10 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Automatically update pending packages on startup. Checks for updates weekly.
-(use-package auto-package-update
-  :config (auto-package-update-maybe))
-
 ;; Auto-format clang supported languages on save.
 (use-package clang-format
   :init (defun clang-format-on-save ()
