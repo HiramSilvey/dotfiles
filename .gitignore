@@ -6,6 +6,7 @@
 .emacs.d/bookmarks
 .emacs.d/.cache/
 .emacs.d/eln-cache/
+.emacs.d/elpa/
 .emacs.d/eshell/history
 .emacs.d/eshell/lastdir
 .emacs.d/history
