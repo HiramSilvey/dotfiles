@@ -6,12 +6,12 @@
 .emacs.d/bookmarks
 .emacs.d/.cache/
 .emacs.d/eln-cache/
-.emacs.d/elpa/
 .emacs.d/eshell/history
 .emacs.d/eshell/lastdir
 .emacs.d/history
 .emacs.d/local.el
 .emacs.d/places
+.emacs.d/straight/
 .emacs.d/tramp
 .emacs.d/transient/
 .emacs.d/undo-fu-session/
