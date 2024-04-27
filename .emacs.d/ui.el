@@ -3,37 +3,30 @@
 ;;; Code:
 
 ;; Pretty icons.
-(use-package all-the-icons
-  :ensure t)
+(use-package all-the-icons)
 (use-package all-the-icons-dired
-  :ensure t
   :after all-the-icons
   :hook (dired-mode . all-the-icons-dired-mode))
 
 ;; Breadcrumbs within the modeline providing more information on the current
 ;; cursor location.
 (use-package breadcrumb
-  :ensure t
   :custom (global-mode-string '(:eval (breadcrumb-imenu-crumbs))))
 
 ;; Highlight VC changes in the lefthand gutter.
 (use-package diff-hl
-  :ensure t
   :init (global-diff-hl-mode))
 
 ;; Extra dired colors.
-(use-package diredfl
-  :ensure t)
+(use-package diredfl)
 
 ;; Enable a snazzy modeline.
 (use-package doom-modeline
-  :ensure t
   :init (doom-modeline-mode 1)
   :custom (column-number-mode t "Display in which column the cursor is."))
 
 ;; Pretty theme.
 (use-package doom-themes
-  :ensure t
   :custom
   (doom-themes-enable-bold t "Universally enable bold.")
   (doom-themes-enable-italic t "Universally enable italics.")
@@ -48,27 +41,22 @@
 
 ;; Temporarily highlight modified regions.
 (use-package goggles
-  :ensure t
   :hook ((prog-mode text-mode) . goggles-mode)
   :config (setq-default goggles-pulse t))  ;; set to nil to disable pulsing
 
 ;; Highlight TODO keywords.
 (use-package hl-todo
-  :init (hl-todo-mode)
-  :ensure t)
+  :init (hl-todo-mode))
 
 ;; Highlight code parentheses.
 (use-package highlight-parentheses
-  :ensure t
   :hook (prog-mode . highlight-parentheses-mode))
 
 ;; Icons needed for `doom-modeline'.
-(use-package nerd-icons
-  :ensure t)
+(use-package nerd-icons)
 
 ;; Differentiate code buffers from everything else.
 (use-package solaire-mode
-  :ensure t
   :init (solaire-global-mode +1))
 
 (use-package emacs

@@ -4,12 +4,10 @@
 
 ;; Automatically update pending packages on startup. Checks for updates weekly.
 (use-package auto-package-update
-  :ensure t
   :config (auto-package-update-maybe))
 
 ;; Auto-format clang supported languages on save.
 (use-package clang-format
-  :ensure t
   :init (defun clang-format-on-save ()
           (add-hook 'before-save-hook 'clang-format-buffer nil 'local))
   :hook ((c++-ts-mode
@@ -23,28 +21,23 @@
 
 ;; COMPlete ANYthing.
 (use-package company
-  :ensure t
   :hook (after-init . global-company-mode))
 
 ;; Dead-simple xref lookups.
 (use-package dumb-jump
-  :ensure t
   :config (add-hook 'xref-backend-functions 'dumb-jump-xref-activate))
 
 ;; Ensure exec-path matches the shell $PATH
 (use-package exec-path-from-shell
-  :ensure t
   :custom (exec-path-from-shell-arguments nil)
   :config (exec-path-from-shell-initialize))
 
 ;; Select region outwards.
 (use-package expand-region
-  :ensure t
   :bind ("C-=" . er/expand-region))
 
 ;; Prefer tree-sitter enabled modes when installed.
 (use-package treesit-auto
-  :ensure t
   :functions (global-treesit-auto-mode)
   :custom (treesit-auto-install
            'prompt "Prompt to auto-install missing tree-sitter grammars.")
@@ -52,19 +45,16 @@
 
 ;; Improved, yet simple, undo + redo functionality.
 (use-package undo-fu
-  :ensure t
   :bind (("C-/" . undo-fu-only-undo)
          ("M-_" . unfo-fu-only-redo)))
 
 ;; Undo + redo across emacs sessions.
 (use-package undo-fu-session
-  :ensure t
   :init (undo-fu-session-global-mode)
   :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 ;; Help navigate keybindings.
 (use-package which-key
-  :ensure t
   :init (which-key-mode))
 
 (use-package emacs

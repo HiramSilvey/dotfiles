@@ -3,12 +3,10 @@
 ;;; Code:
 
 ;; Dired using fd.
-(use-package fd-dired
-  :ensure t)
+(use-package fd-dired)
 
 ;; VERTical Interactive COmpletion.
 (use-package vertico
-  :ensure t
   :init (vertico-mode))
 
 ;; Optionally use the `orderless' completion style. See
@@ -18,7 +16,6 @@
 ;; Multiple files can be opened at once with `find-file' if you enter a
 ;; wildcard. You may also give the `initials' completion style a try.
 (use-package orderless
-  :ensure t
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -33,7 +30,6 @@
 
 ;; Enable richer vertico annotations using the marginalia package.
 (use-package marginalia
-  :ensure t
   :init (marginalia-mode)
   ;; Bind `marginalia-cycle' only in the minibuffer
   :bind (:map minibuffer-local-map

@@ -4,21 +4,17 @@
 
 ;; Support Cargo configuration files.
 (use-package cargo-mode
-  :ensure t
   :hook ((rust-mode rust-ts-mode) . cargo-minor-mode))
 
 ;; Support Git configuration files.
-(use-package git-modes
-  :ensure t)
+(use-package git-modes)
 
 ;; Support Markdown.
 (use-package markdown-mode
-  :ensure t
   :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))
 
 ;; Org mode!
 (use-package org
-  :ensure t
   :bind
   ("C-c a" . org-agenda)
   ("C-c c" . org-capture)
@@ -69,12 +65,10 @@
 
 ;; Support Rust.
 (use-package rust-mode
-  :ensure t
   :hook ((rust-mode rust-ts-mode) . rust-format-on-save))
 
 ;; Support Go.
 (use-package go-mode
-  :ensure t
   :config
   ;; Global Go language server configuration.
   (setq-default eglot-workspace-configuration

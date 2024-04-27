@@ -2,10 +2,25 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Enable installing packages from MELPA.
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
+;; Prevent `package.el' from loading packages prior to this init file loading.
+(setq package-enable-at-startup nil)
+
+;; Boostrap `straight.el'.
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
 ;; Bootstrap `use-package'.
 (require 'gnutls)
@@ -16,7 +31,9 @@
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 (require 'bind-key)
-(setq use-package-always-ensure t)
+
+;; Tell `use-package' to use `straight.el' by default.
+(setq straight-use-package-by-default t)
 
 (use-package emacs
   :init
