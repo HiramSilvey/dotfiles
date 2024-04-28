@@ -16,4 +16,5 @@
 .emacs.d/tramp
 .emacs.d/transient/
 .emacs.d/undo-fu-session/
+.emacs.d/url/
 projectile-bookmarks.eld
