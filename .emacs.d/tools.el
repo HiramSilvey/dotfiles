@@ -21,9 +21,7 @@
                    (local-set-key [tab] 'company-complete-common)
                    ;; Add binding to exit eshell quickly.
                    (local-set-key (kbd "C-d") 'eshell-life-is-too-much)))
-  ;; Append each command to the history file immediately.
-  (eshell-pre-command . eshell-append-history)
-  :custom (eshell-save-history-on-exit nil))
+  :custom (eshell-history-append t))
 
 ;; Make Emacs shell prompt pretty.
 (use-package eshell-prompt-extras
@@ -47,15 +45,6 @@
   (defun eshell-new()
     "Open a new instance of eshell."
     (interactive)
-    (eshell 'N))
-
-  ;; Source: https://emacs.stackexchange.com/a/18569
-  (defun eshell-append-history ()
-    "Call `eshell-write-history' with the `append' parameter set to `t'."
-    (when eshell-history-ring
-      (let ((newest-cmd-ring (make-ring 1)))
-        (ring-insert newest-cmd-ring (car (ring-elements eshell-history-ring)))
-        (let ((eshell-history-ring newest-cmd-ring))
-          (eshell-write-history eshell-history-file-name t))))))
+    (eshell 'N)))
 
 ;;; tools.el ends here.
