@@ -11,7 +11,7 @@
     * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
     * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
     * [autoupdate-oh-my-zsh-plugins](https://github.com/tamcore/autoupdate-oh-my-zsh-plugins)
-* [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 29)<sup>[1](#footnote1)</sup>
+* [GNU Emacs](https://www.gnu.org/software/emacs/) (>= 30)<sup>[1](#footnote1)</sup>
   * [emacs-libvterm dependencies](https://github.com/akermu/emacs-libvterm#requirements)
   * [Go](https://go.dev/doc/install)
     * [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
@@ -29,6 +29,9 @@ git clone https://git.savannah.gnu.org/cgit/emacs.git && cd emacs
 ```
 ```console
 make -j $(nproc)
+```
+```console
+sudo make install
 ```
 Note: When changing versions, run `git clean -d -f -x` before re-running the build commands above to remove previously generated files.
 
