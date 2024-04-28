@@ -16,6 +16,9 @@
 (use-package terraform-mode
   :custom (terraform-format-on-save t))
 
+;; Support Varnish Configuration Language files.
+(use-package vcl-mode)
+
 ;; Support Markdown.
 (use-package markdown-mode
   :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))
