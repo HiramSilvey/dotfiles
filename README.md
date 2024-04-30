@@ -19,13 +19,13 @@
 
 <a name="footnote1">1</a> Compiling `emacs` from source:
 ```console
-git clone https://git.savannah.gnu.org/cgit/emacs.git && cd emacs
+git clone git://git.sv.gnu.org/emacs.git && cd emacs
 ```
 ```console
 ./autogen.sh
 ```
 ```console
-./configure --without-compress-install --with-native-compilation --with-json --with-mailutils --with-pgtk --with-tree-sitter
+./configure --without-compress-install --with-native-compilation --with-mailutils --with-pgtk --with-tree-sitter
 ```
 ```console
 make -j $(nproc)
