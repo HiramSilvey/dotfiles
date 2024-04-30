@@ -45,6 +45,9 @@
 (use-package multi-vterm
   :bind ("C-c t" . multi-vterm))
 
+;; Make HTTP requests easily!
+(use-package plz)
+
 (use-package emacs
   :init
   (defun eshell-new()
