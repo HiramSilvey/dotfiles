@@ -20,13 +20,27 @@
 (use-package eshell
   :bind ("C-c s" . eshell-new)
   :hook
-  (eshell-mode . (lambda ()
+  ((eshell-mode . (lambda ()
                    ;; Disable auto company pop-up and instead bind it to TAB.
                    (setq-local company-idle-delay nil)
                    (local-set-key [tab] 'company-complete-common)
                    ;; Add binding to exit eshell quickly.
                    (local-set-key (kbd "C-d") 'eshell-life-is-too-much)))
-  :custom (eshell-history-append t))
+   (eshell-directory-change . rename-eshell-buffer))
+  :custom
+  ;; Prevent renaming eshell buffers from calling eshell-mode again.
+  (rename-eshell-buffer-hook nil)
+  (eshell-history-append t)
+  :config
+  (defun rename-eshell-buffer()
+    "Rename the current eshell buffer based on the current directory."
+    (rename-buffer
+     (concat "<eshell>:" (abbreviate-file-name default-directory)) t))
+  (defun eshell-new()
+    "Open a new instance of eshell."
+    (interactive)
+    (eshell 'N)
+    (rename-eshell-buffer)))
 
 ;; Make Emacs shell prompt pretty.
 (use-package eshell-prompt-extras
@@ -44,12 +58,5 @@
 ;; Allow multiple vterm buffers.
 (use-package multi-vterm
   :bind ("C-c t" . multi-vterm))
-
-(use-package emacs
-  :init
-  (defun eshell-new()
-    "Open a new instance of eshell."
-    (interactive)
-    (eshell 'N)))
 
 ;;; tools.el ends here.
