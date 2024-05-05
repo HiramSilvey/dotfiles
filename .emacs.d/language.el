@@ -95,15 +95,19 @@
   ;; Bind "C-c o" to swap between C/C++ source and header files.
   ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
   ;; other languages.
-  ;; Additionally ensure eglot is started automatically on clang-supported
+  ;; Additionally ensure eglot is started automatically on LSP-supported
   ;; languages.
-  (dolist (hook '(c-common-mode-hook
-                  c++-ts-mode-hook
-                  c-or-c++-ts-mode-hook
-                  c-ts-mode-hook))
-    (add-hook hook (lambda()
-                     (local-set-key (kbd "C-c o") 'ff-find-other-file)
-                     (eglot-ensure))))
-  (add-hook 'rust-ts-mode-hook 'eglot-ensure))
+  (let* ((ff-hooks '(c-common-mode-hook
+                    c++-ts-mode-hook
+                    c-or-c++-ts-mode-hook
+                    c-ts-mode-hook))
+        (eglot-hooks (append ff-hooks '(go-mode-hook
+                                         go-ts-mode-hook
+                                         rust-mode-hook
+                                         rust-ts-mode-hook))))
+    (dolist (hook ff-hooks)
+      (add-hook hook '(local-set-key (kbd "C-c o") 'ff-find-other-file)))
+    (dolist (hook eglot-hooks)
+      (add-hook hook 'eglot-ensure))))
 
 ;;; language.el ends here.
