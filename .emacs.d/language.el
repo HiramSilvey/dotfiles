@@ -19,6 +19,10 @@
 ;; Support Varnish Configuration Language files.
 (use-package vcl-mode)
 
+;; Support Bazel and Starlark files.
+(use-package bazel
+  :config (add-to-list 'auto-mode-alist '("\\.star\\'" . bazel-starlark-mode)))
+
 ;; Support Markdown.
 (use-package markdown-mode
   :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))
