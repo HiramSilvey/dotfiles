@@ -11,11 +11,6 @@
 (use-package docker
   :bind ("C-c d" . docker))
 
-;; Kubernetes support.
-(use-package kubel
-  :after (vterm)
-  :config (kubel-vterm-setup))
-
 ;; Emacs shell customization.
 (use-package eshell
   :bind ("C-c s" . eshell-new)
