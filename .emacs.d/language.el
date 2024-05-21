@@ -88,7 +88,7 @@
   :hook
   (before-save . (lambda ()
                    (call-interactively 'eglot-code-action-organize-imports)))
-  (before-save . gofmt-before-save))
+  (before-save . 'gofmt-before-save))
 
 (use-package emacs
   :init
