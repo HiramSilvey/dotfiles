@@ -27,6 +27,9 @@
 (use-package yaml-ts-mode
   :config (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode)))
 
+;; Support Protocol Buffer files.
+(use-package protobuf-mode)
+
 ;; Support Markdown.
 (use-package markdown-mode
   :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))
