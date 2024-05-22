@@ -23,6 +23,10 @@
 (use-package bazel
   :config (add-to-list 'auto-mode-alist '("\\.star\\'" . bazel-starlark-mode)))
 
+;; Configure yaml-ts-mode support.
+(use-package yaml-ts-mode
+  :config (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-ts-mode)))
+
 ;; Support Markdown.
 (use-package markdown-mode
   :custom (markdown-command '("pandoc" "--from=markdown" "--to=html5")))
