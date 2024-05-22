@@ -15,6 +15,7 @@
   * [emacs-libvterm dependencies](https://github.com/akermu/emacs-libvterm#requirements)
   * [Go](https://go.dev/doc/install)
     * [gopls](https://pkg.go.dev/golang.org/x/tools/gopls)
+    * [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports)
 * [GNU Stow](https://www.gnu.org/software/stow/)
 
 <a name="footnote1">1</a> Compiling `emacs` from source:
