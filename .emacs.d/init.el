@@ -25,6 +25,9 @@
 ;; Tell `use-package' to use `straight.el' by default.
 (setq straight-use-package-by-default t)
 
+;; Quick bugfix for an undeclared package dependency.
+(use-package project)
+
 (use-package emacs
   :init
   (load "~/.emacs.d/language.el")
