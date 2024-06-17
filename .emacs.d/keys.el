@@ -7,6 +7,7 @@
   :init (which-key-mode))
 
 (use-package emacs
-  :bind ("C-c q" . kill-buffer-and-window))
+  :bind (("C-c q" . kill-buffer-and-window)
+         ("C-c /" . comment-or-uncomment-region)))
 
 ;;; keys.el ends here
