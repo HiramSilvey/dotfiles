@@ -8,12 +8,11 @@
            'recommended "Use magit recommended C-c keybindings."))
 
 ;; Docker support.
-(use-package docker
-  :bind ("C-c d" . docker))
+(use-package docker)
 
 ;; Emacs shell customization.
 (use-package eshell
-  :bind ("C-c s" . eshell-new)
+  :bind ("C-c s" . hs/eshell-new)
   :hook
   ((eshell-mode . (lambda ()
                    ;; Disable auto company pop-up and instead bind it to TAB.
@@ -21,21 +20,29 @@
                    (local-set-key [tab] 'company-complete-common)
                    ;; Add binding to exit eshell quickly.
                    (local-set-key (kbd "C-d") 'eshell-life-is-too-much)))
-   (eshell-directory-change . rename-eshell-buffer))
+   (eshell-directory-change . hs/rename-eshell-buffer))
   :custom
   ;; Prevent renaming eshell buffers from calling eshell-mode again.
   (rename-eshell-buffer-hook nil)
   (eshell-history-append t)
   :config
-  (defun rename-eshell-buffer()
+  (setq hs/eshell-buffer-prefix "<eshell>:")
+
+  (defun hs/rename-eshell-buffer ()
     "Rename the current eshell buffer based on the current directory."
     (rename-buffer
-     (concat "<eshell>:" (abbreviate-file-name default-directory)) t))
-  (defun eshell-new()
+     (concat hs/eshell-buffer-prefix (abbreviate-file-name default-directory)) t))
+
+  (defun hs/eshell-new ()
     "Open a new instance of eshell."
     (interactive)
     (eshell 'N)
-    (rename-eshell-buffer)))
+    (hs/rename-eshell-buffer))
+
+  (defun hs/killall-eshell ()
+    "Kill all eshell buffers, prompting for confirmation if necessary."
+    (interactive)
+    (hs/killall-buffers-prefix hs/eshell-buffer-prefix)))
 
 ;; Make Emacs shell prompt pretty.
 (use-package eshell-prompt-extras
@@ -47,11 +54,45 @@
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
-  :custom (vterm-buffer-name-string
-           "<vterm>%s" "Mark vterm buffer names with a prefix."))
+  :config
+  ;; Mark vterm buffer names with a prefix.
+  (setq hs/vterm-buffer-prefix "<vterm>:")
+  (setq vterm-buffer-name-string (concat hs/vterm-buffer-prefix "%s"))
+
+  (defun hs/killall-vterm ()
+    "Kill all vterm buffers, prompting for confirmation if necessary."
+    (interactive)
+    (hs/killall-buffers-prefix hs/vterm-buffer-prefix)))
 
 ;; Allow multiple vterm buffers.
 (use-package multi-vterm
   :bind ("C-c t" . multi-vterm))
+
+(use-package emacs
+  :init
+  (defun hs/killall-buffers-prefix (prefix)
+    "Kill all buffers with names matching the prefix string, prompting the user
+    to confirm if needed."
+    (interactive)
+    (let ((buffers (mapcar #'buffer-name (buffer-list))))
+      (while buffers
+        (let ((buffer (pop buffers)))
+          (if (string-prefix-p prefix buffer)
+              (kill-buffer buffer))))))
+
+  (defvar-keymap hs/kill-map
+    :doc "Buffer kill map."
+    "s" 'hs/killall-eshell
+    "t" 'hs/killall-vterm)
+
+  (keymap-set global-map "C-c k" hs/kill-map)
+  (which-key-add-key-based-replacements "C-c k" "kill")
+
+  (defvar-keymap hs/tools-map
+    :doc "Tools map."
+    "d" 'docker)
+
+  (keymap-set global-map "C-c x" hs/tools-map)
+  (which-key-add-key-based-replacements "C-c x" "tools"))
 
 ;;; tools.el ends here.

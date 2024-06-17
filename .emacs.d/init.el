@@ -30,11 +30,13 @@
 
 (use-package emacs
   :init
+  (load "~/.emacs.d/keys.el")
+  (load "~/.emacs.d/navigation.el")
   (load "~/.emacs.d/language.el")
+  (load "~/.emacs.d/utility.el")
   (load "~/.emacs.d/search.el")
   (load "~/.emacs.d/tools.el")
   (load "~/.emacs.d/ui.el")
-  (load "~/.emacs.d/utility.el")
 
   ;; Load local file configurations if present.
   (if (file-readable-p "~/.emacs.d/local.el")

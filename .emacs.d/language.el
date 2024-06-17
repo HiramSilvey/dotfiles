@@ -36,9 +36,6 @@
 
 ;; Org mode!
 (use-package org
-  :bind
-  ("C-c a" . org-agenda)
-  ("C-c c" . org-capture)
   :hook (org-mode . visual-line-mode)  ;; Wrap lines visually.
   :custom
   (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
@@ -108,7 +105,7 @@
 
 (use-package emacs
   :init
-  ;; 1. Bind "C-c o" to swap between C/C++ source and header files.
+  ;; 1. Bind "C-c z" to swap between C/C++ source and header files.
   ;; Note: Customize `ff-other-file-alist' to easily extend this to tests and/or
   ;; other languages.
   ;; 2. Ensure eglot is started automatically on LSP-supported languages.
@@ -121,8 +118,16 @@
                                          rust-mode-hook
                                          rust-ts-mode-hook))))
     (dolist (hook ff-hooks)
-      (add-hook hook '(local-set-key (kbd "C-c o") 'ff-find-other-file)))
+      (add-hook hook '(local-set-key (kbd "C-c z") 'ff-find-other-file)))
     (dolist (hook eglot-hooks)
-      (add-hook hook 'eglot-ensure))))
+      (add-hook hook 'eglot-ensure)))
+
+  (defvar-keymap hs/org-map
+    :doc "Custom org mode map."
+    "c" 'org-capture
+    "v" 'org-agenda)
+
+  (keymap-set global-map "C-c o" hs/org-map)
+  (which-key-add-key-based-replacements "C-c o" "org"))
 
 ;;; language.el ends here.

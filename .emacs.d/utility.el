@@ -19,18 +19,14 @@
 (use-package company
   :hook (after-init . global-company-mode))
 
-;; Dead-simple xref lookups.
-(use-package dumb-jump
-  :config (add-hook 'xref-backend-functions 'dumb-jump-xref-activate))
+;; On-the-fly syntax checker.
+(use-package flymake
+  :bind ("C-c e" . flymake-goto-next-error))
 
 ;; Ensure exec-path matches the shell $PATH
 (use-package exec-path-from-shell
   :custom (exec-path-from-shell-arguments nil)
   :config (exec-path-from-shell-initialize))
-
-;; Select region outwards.
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
 
 ;; Prefer tree-sitter enabled modes when installed.
 (use-package treesit-auto
@@ -48,10 +44,6 @@
 (use-package undo-fu-session
   :init (undo-fu-session-global-mode)
   :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
-
-;; Help navigate keybindings.
-(use-package which-key
-  :init (which-key-mode))
 
 (use-package emacs
   :init
