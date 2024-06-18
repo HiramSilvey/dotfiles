@@ -15,13 +15,22 @@
           json-ts-mode)
          . clang-format-on-save))
 
-;; COMPlete ANYthing.
-(use-package company
-  :hook (after-init . global-company-mode))
-
-;; On-the-fly syntax checker.
-(use-package flymake
-  :bind ("C-c e" . flymake-goto-next-error))
+(use-package corfu
+  ; Free the RET key for less intrusive behavior.
+  :bind (:map corfu-map ("RET" . nil))
+  :init
+  (global-corfu-mode)
+  :custom
+  ;; Enable auto completion and configure quitting.
+  (corfu-auto t)
+  (corfu-auto-delay 0.5)
+  (corfu-quit-no-match 'separator)
+  ;; Enable corfu to use orderless.
+  (corfu-separator ?_)
+  :hook
+  (eshell-mode . (lambda ()
+                   (setq-local corfu-auto nil)
+                   (corfu-mode))))
 
 ;; Ensure exec-path matches the shell $PATH
 (use-package exec-path-from-shell
@@ -47,6 +56,7 @@
 
 (use-package yasnippet
   :init (yas-global-mode 1)
+  :bind ("M-<ret>" . yas-expand)
   :config
   (which-key-add-key-based-replacements "C-c &" "yasnippet"))
 (use-package yasnippet-snippets)
@@ -56,6 +66,9 @@
   ;; `TAB' indents correctly with spaces.
   (setq-default indent-tabs-mode nil)
 
+  ;; `TAB' indents and completes.
+  (setq tab-always-indent 'complete)
+
   ;; Remove extra whitespace on file save.
   (add-hook 'before-save-hook 'whitespace-cleanup)
 
@@ -64,6 +77,11 @@
 
   ;; Always save an auth-source entry for further use by additional auth-source
   ;; backends.
-  (setq auth-source-save-behavior nil))
+  (setq auth-source-save-behavior nil)
+
+  ;; Hide commands in M-x which do not apply to the current mode. Corfu commands
+  ;; are hidden, since they are not used via M-x. This setting is useful beyond
+  ;; Corfu.
+  (setq read-extended-command-predicate #'command-completion-default-include-p))
 
 ;;; utility.el ends here

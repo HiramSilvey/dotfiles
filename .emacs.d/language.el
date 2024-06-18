@@ -36,6 +36,7 @@
 
 ;; Org mode!
 (use-package org
+  :init (which-key-add-key-based-replacements "C-c o" "org")
   :bind (("C-c o c" . org-capture)
          ("C-c o a" . org-agenda))
   :hook (org-mode . visual-line-mode)  ;; Wrap lines visually.
@@ -58,8 +59,6 @@
         (?D . '(shadow)))
       "Differentiate priorities visually.")
   :config
-  (which-key-add-key-based-replacements "C-c o" "org")
-
   (setq org-capture-templates
         `(("b" "Bookmark" entry (file+olp "~/Documents/Org/bookmarks.org" "Inbox")
            "* [[%^{Link}][%^{Title}]]" :immediate-finish t)

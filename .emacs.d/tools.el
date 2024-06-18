@@ -17,9 +17,6 @@
          ("C-c k s" . hs/killall-eshell))
   :hook
   ((eshell-mode . (lambda ()
-                   ;; Disable auto company pop-up and instead bind it to TAB.
-                   (setq-local company-idle-delay nil)
-                   (local-set-key [tab] 'company-complete-common)
                    ;; Add binding to exit eshell quickly.
                    (local-set-key (kbd "C-d") 'eshell-life-is-too-much)))
    (eshell-directory-change . hs/rename-eshell-buffer))
