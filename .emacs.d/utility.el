@@ -15,6 +15,7 @@
           json-ts-mode)
          . clang-format-on-save))
 
+;; Completion in region function.
 (use-package corfu
   ; Free the RET key for less intrusive behavior.
   :bind (:map corfu-map ("RET" . nil))
