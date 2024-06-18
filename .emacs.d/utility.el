@@ -45,6 +45,12 @@
   :init (undo-fu-session-global-mode)
   :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
+(use-package yasnippet
+  :init (yas-global-mode 1)
+  :config
+  (which-key-add-key-based-replacements "C-c &" "yasnippet"))
+(use-package yasnippet-snippets)
+
 (use-package emacs
   :init
   ;; `TAB' indents correctly with spaces.

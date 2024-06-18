@@ -36,6 +36,8 @@
 
 ;; Org mode!
 (use-package org
+  :bind (("C-c o c" . org-capture)
+         ("C-c o a" . org-agenda))
   :hook (org-mode . visual-line-mode)  ;; Wrap lines visually.
   :custom
   (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
@@ -56,6 +58,8 @@
         (?D . '(shadow)))
       "Differentiate priorities visually.")
   :config
+  (which-key-add-key-based-replacements "C-c o" "org")
+
   (setq org-capture-templates
         `(("b" "Bookmark" entry (file+olp "~/Documents/Org/bookmarks.org" "Inbox")
            "* [[%^{Link}][%^{Title}]]" :immediate-finish t)
@@ -120,14 +124,6 @@
     (dolist (hook ff-hooks)
       (add-hook hook '(local-set-key (kbd "C-c z") 'ff-find-other-file)))
     (dolist (hook eglot-hooks)
-      (add-hook hook 'eglot-ensure)))
-
-  (defvar-keymap hs/org-map
-    :doc "Custom org mode map."
-    "c" 'org-capture
-    "v" 'org-agenda)
-
-  (keymap-set global-map "C-c o" hs/org-map)
-  (which-key-add-key-based-replacements "C-c o" "org"))
+      (add-hook hook 'eglot-ensure))))
 
 ;;; language.el ends here.

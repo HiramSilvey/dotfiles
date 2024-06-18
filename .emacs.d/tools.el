@@ -8,11 +8,13 @@
            'recommended "Use magit recommended C-c keybindings."))
 
 ;; Docker support.
-(use-package docker)
+(use-package docker
+  :bind ("C-c x d" . docker))
 
 ;; Emacs shell customization.
 (use-package eshell
-  :bind ("C-c s" . hs/eshell-new)
+  :bind (("C-c s" . hs/eshell-new)
+         ("C-c k s" . hs/killall-eshell))
   :hook
   ((eshell-mode . (lambda ()
                    ;; Disable auto company pop-up and instead bind it to TAB.
@@ -54,6 +56,7 @@
 
 ;; Blazingly fast terminal emulator.
 (use-package vterm
+  :bind ("C-c k t" . hs/killall-vterm)
   :config
   ;; Mark vterm buffer names with a prefix.
   (setq hs/vterm-buffer-prefix "<vterm>:")
@@ -80,19 +83,7 @@
           (if (string-prefix-p prefix buffer)
               (kill-buffer buffer))))))
 
-  (defvar-keymap hs/kill-map
-    :doc "Buffer kill map."
-    "s" 'hs/killall-eshell
-    "t" 'hs/killall-vterm)
-
-  (keymap-set global-map "C-c k" hs/kill-map)
   (which-key-add-key-based-replacements "C-c k" "kill")
-
-  (defvar-keymap hs/tools-map
-    :doc "Tools map."
-    "d" 'docker)
-
-  (keymap-set global-map "C-c x" hs/tools-map)
   (which-key-add-key-based-replacements "C-c x" "tools"))
 
 ;;; tools.el ends here.
