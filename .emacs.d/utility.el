@@ -33,10 +33,15 @@
                    (setq-local corfu-auto nil)
                    (corfu-mode))))
 
-;; Ensure exec-path matches the shell $PATH
+;; Ensure exec-path matches the shell $PATH.
 (use-package exec-path-from-shell
   :custom (exec-path-from-shell-arguments nil)
-  :config (exec-path-from-shell-initialize))
+  :config
+  (dolist (var '("SSH_AUTH_SOCK"
+                 "SSH_AGENT_PID"
+                 "GPG_AGENT_INFO"))
+    (add-to-list 'exec-path-from-shell-variables var))
+  (exec-path-from-shell-initialize))
 
 ;; Prefer tree-sitter enabled modes when installed.
 (use-package treesit-auto
