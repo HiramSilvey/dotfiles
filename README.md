@@ -18,6 +18,21 @@
     * [goimports](https://pkg.go.dev/golang.org/x/tools/cmd/goimports)
 * [GNU Stow](https://www.gnu.org/software/stow/)
 
+qt5-qtwayland
+qt6-qtwayland
+pipewire
+wireplumber
+xdg-desktop-portal-hyprland
+hyprland
+hyprpaper
+hypridle
+hyprlock
+waybar
+bemenu
+j4-dmenu-desktop
+dolphin
+firefox
+
 <a name="footnote1">1</a> Compiling `emacs` from source:
 ```console
 git clone git://git.sv.gnu.org/emacs.git && cd emacs
