@@ -28,8 +28,7 @@ hyprpaper
 hypridle
 hyprlock
 waybar
-bemenu
-j4-dmenu-desktop
+fuzzel
 dolphin
 firefox
 
