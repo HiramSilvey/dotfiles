@@ -3,16 +3,18 @@
   "position": "top",
   "height": 24,
   // Choose the order of the modules
-  "modules-left": ["hyprland/workspaces", "hyprland/mode", "custom/spotify"],
+  "modules-left": ["hyprland/workspaces", "hyprland/submap", "custom/spotify"],
   "modules-center": ["hyprland/window"],
   "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "clock"],
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{id}",
-    "all-outputs": false,
-    "disable-scroll": true
+    "disable-scroll": true,
+    "persistent-workspaces": {
+      "*": 5  // 5 workspaces by default on every monitor
+    }
   },
-  "hyprland/mode": {
+  "hyprland/submap": {
     "format": "<span style=\"italic\">{}</span>"
   },
   "tray": {
@@ -20,7 +22,9 @@
     "spacing": 10
   },
   "clock": {
-    "format-alt": "{:%Y-%m-%d}"
+    "format": "{:%T}",
+    "format-alt": "{:%F}",
+    "interval": 1
   },
   "cpu": {
     "format": "{usage}% "
@@ -28,18 +32,18 @@
   "memory": {
     "format": "{}% "
   },
-  // "battery": {
-  //     "bat": "BAT0",
-  //     "states": {
-  //         // "good": 95,
-  //         "warning": 30,
-  //         "critical": 15
-  //     },
-  //     "format": "{capacity}% {icon}",
-  //     // "format-good": "", // An empty format will hide the module
-  //     // "format-full": "",
-  //     "format-icons": ["", "", "", "", ""]
-  // },
+  "battery": {
+      "bat": "BAT0",
+      "states": {
+          // "good": 95,
+          "warning": 30,
+          "critical": 15
+      },
+      "format": "{capacity}% {icon}",
+      // "format-good": "", // An empty format will hide the module
+      // "format-full": "",
+      "format-icons": ["", "", "", "", ""]
+  },
   "network": {
     // "interface": "wlp2s0", // (Optional) To force the use of this interface
     "format-wifi": "{essid} ({signalStrength}%) ",
@@ -64,9 +68,12 @@
   },
   "custom/spotify": {
     "format": " {}",
+    "escape": true,
+    "return-type": "json",
     "max-length": 40,
-    "interval": 30, // Remove this if your script is endless and write in loop
-    "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
+    "on-click": "playerctl -p spotify play-pause",
+    "on-click-right": "killall spotify",
+    "exec": "python3 $HOME/.config/waybar/mediaplayer.py --player spotify",
     "exec-if": "pgrep spotify"
   }
 }

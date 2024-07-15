@@ -15,11 +15,6 @@ window#waybar {
     font-weight: bold;
     font-family: "MesloLGS NF";
 }
-/*
-#workspaces {
-    padding: 0 5px;
-}
-*/
 
 #workspaces button {
     padding: 0 5px;
@@ -28,12 +23,12 @@ window#waybar {
     border-top: 2px solid transparent;
 }
 
-#workspaces button.focused {
-    color: #c9545d;
-    border-top: 2px solid #c9545d;
+#workspaces button.active {
+    color: #33ccff;
+    border-top: 2px solid #33ccff;
 }
 
-#mode {
+#submap {
     background: #64727D;
     border-bottom: 3px solid white;
 }
@@ -59,7 +54,7 @@ window#waybar {
 
 @keyframes blink {
     to {
-        background-color: #ffffff;
+        background-color: white;
         color: black;
     }
 }

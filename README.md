@@ -31,6 +31,8 @@ waybar
 fuzzel
 dolphin
 firefox
+pavucontrol
+socat
 
 <a name="footnote1">1</a> Compiling `emacs` from source:
 ```console

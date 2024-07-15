@@ -69,6 +69,9 @@
   ;; Powerlevel10k-compatible font.
   (set-face-attribute 'default nil :font "MesloLGS NF" :height 143)
   ;; Default unicode fallback font.
-  (set-fontset-font "fontset-default" 'unicode "Noto Sans Symbols 2"))
+  (set-fontset-font "fontset-default" 'unicode "Noto Sans Symbols 2")
+
+  ;; Default new frames to be very slightly transparent.
+  (add-to-list 'default-frame-alist '(alpha-background . 90)))
 
 ;;; ui.el ends here.
