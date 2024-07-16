@@ -24,8 +24,8 @@ window#waybar {
 }
 
 #workspaces button.active {
-    color: #33ccff;
-    border-top: 2px solid #33ccff;
+    color: #d26603;
+    border-top: 2px solid #d26603;
 }
 
 #submap {
