@@ -1,0 +1,79 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 24,
+  // Choose the order of the modules
+  "modules-left": ["hyprland/workspaces", "hyprland/submap", "custom/spotify"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["pulseaudio", "network", "cpu", "memory", "battery", "tray", "clock"],
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{id}",
+    "disable-scroll": true,
+    "persistent-workspaces": {
+      "*": 5  // 5 workspaces by default on every monitor
+    }
+  },
+  "hyprland/submap": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "tray": {
+    // "icon-size": 21,
+    "spacing": 10
+  },
+  "clock": {
+    "format": "{:%T}",
+    "format-alt": "{:%F}",
+    "interval": 1
+  },
+  "cpu": {
+    "format": "{usage}% "
+  },
+  "memory": {
+    "format": "{}% "
+  },
+  "battery": {
+      "bat": "BAT0",
+      "states": {
+          // "good": 95,
+          "warning": 30,
+          "critical": 15
+      },
+      "format": "{capacity}% {icon}",
+      // "format-good": "", // An empty format will hide the module
+      // "format-full": "",
+      "format-icons": ["", "", "", "", ""]
+  },
+  "network": {
+    // "interface": "wlp2s0", // (Optional) To force the use of this interface
+    "format-wifi": "{essid} ({signalStrength}%) ",
+    "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+    "format-disconnected": "Disconnected ⚠"
+  },
+  "pulseaudio": {
+    //"scroll-step": 1,
+    "format": "{volume}% {icon}",
+    "format-bluetooth": "{volume}% {icon}",
+    "format-muted": "",
+    "format-icons": {
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", ""]
+    },
+    "on-click": "pavucontrol"
+  },
+  "custom/spotify": {
+    "format": " {}",
+    "escape": true,
+    "return-type": "json",
+    "max-length": 40,
+    "on-click": "playerctl -p spotify play-pause",
+    "on-click-right": "killall spotify",
+    "exec": "python3 $HOME/.config/waybar/mediaplayer.py --player spotify",
+    "exec-if": "pgrep spotify"
+  }
+}
