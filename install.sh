@@ -3,9 +3,14 @@
 # Exit the script if any errors are encountered.
 set -e
 
+# Print commands to stdout as they are run.
+set -o xtrace
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar fuzzel dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm
+sudo dnf copr enable erikreider/SwayNotificationCenter
+
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar fuzzel dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm, grim, slurp, SwayNotificationCenter
 
 # zsh
 [ -d $HOME/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
