@@ -10,7 +10,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 sudo dnf copr enable erikreider/SwayNotificationCenter
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar fuzzel dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm, grim, slurp, SwayNotificationCenter
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm, grim, slurp, SwayNotificationCenter, fuzzel, qt6ct, kvantum, plasma-breeze-qt6
 
 # zsh
 [ -d $HOME/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
