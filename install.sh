@@ -6,7 +6,8 @@ set -e
 # Print commands to stdout as they are run.
 set -o xtrace
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIRNAME=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_BASENAME=$(basename $SCRIPT_DIRNAME)
 
 sudo dnf copr enable erikreider/SwayNotificationCenter
 
@@ -49,4 +50,6 @@ sudo mv clipse /usr/local/bin/clipse
 # Finish install.
 [ -d $HOME/.emacs.d ] && mv $HOME/.emacs.d $HOME/.emacs.d.old
 [ -d $HOME/.zshrc ] && mv $HOME/.zshrc $HOME/.zshrc.old
-stow $SCRIPT_DIR -t $HOME/
+
+cd ${SCRIPT_DIRNAME}/..
+stow $SCRIPT_BASENAME -t ${HOME}/
