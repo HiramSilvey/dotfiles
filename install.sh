@@ -40,12 +40,20 @@ emacs --eval "(progn (all-the-icons-install-fonts t) (nerd-icons-install-fonts t
 fc-cache -fv
 
 # clipse
-[ -d $HOME/src/public/apps/clipse ] || git clone https://github.com/savedra1/clipse $HOME/src/public/apps/clipse
+[ -d $HOME/src/public/apps/clipse ] || git clone https://github.com/savedra1/clipse.git $HOME/src/public/apps/clipse
 cd $HOME/src/public/apps/clipse
 git pull
 go mod tidy
 go build -o clipse
 sudo mv clipse /usr/local/bin/clipse
+
+# hyprland contrib scratchpad
+[ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
+cd $HOME/src/public/contrib
+git pull
+cd scratchpad
+sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
+sudo make install
 
 # Finish install.
 [ -d $HOME/.emacs.d ] && mv $HOME/.emacs.d $HOME/.emacs.d.old
