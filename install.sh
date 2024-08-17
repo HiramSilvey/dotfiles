@@ -9,9 +9,13 @@ set -o xtrace
 SCRIPT_DIRNAME=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 SCRIPT_BASENAME=$(basename $SCRIPT_DIRNAME)
 
-sudo dnf copr enable erikreider/SwayNotificationCenter
+sudo dnf copr enable solopasha/hyprland
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm, grim, slurp, SwayNotificationCenter, fuzzel, qt6ct, kvantum, plasma-breeze-qt6
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell
+
+# rust
+which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup update
 
 # zsh
 [ -d $HOME/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -55,9 +59,33 @@ cd scratchpad
 sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
 sudo make install
 
+# swww
+[ -d $HOME/src/public/swww ] || git clone https://github.com/LGFae/swww.git $HOME/src/public/swww
+cd $HOME/src/public/swww
+git pull
+cargo build --release
+sudo mv target/release/swww /usr/local/bin/swww
+sudo mv target/release/swww-daemon /usr/local/bin/swww-daemon
+
+# bun
+curl -fsSL https://bun.sh/install | bash && \
+  sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
+
+# HyprPanel
+[ -d $HOME/src/public/HyprPanel ] || git clone https://github.com/Jas-SinghFSU/HyprPanel.git $HOME/src/public/HyprPanel
+cd $HOME/src/public/HyprPanel
+git pull
+[ -d $HOME/.config/ags ] || mv $HOME/.config/ags $HOME/.config/ags.bkup
+ln -s $(pwd)/HyprPanel $HOME/.config/ags
+
 # Finish install.
 [ -d $HOME/.emacs.d ] && mv $HOME/.emacs.d $HOME/.emacs.d.old
 [ -d $HOME/.zshrc ] && mv $HOME/.zshrc $HOME/.zshrc.old
 
 cd ${SCRIPT_DIRNAME}/..
 stow $SCRIPT_BASENAME -t ${HOME}/
+
+echo "To install dart-sass:
+1. Download and extract the latest release from https://github.com/sass/dart-sass/releases/
+2. sudo mv dart-sass /opt/
+3. sudo ln -s /opt/dart-sass/sass /usr/local/bin/sass"
