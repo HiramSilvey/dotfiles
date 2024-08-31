@@ -7,7 +7,7 @@ set -e
 set -o xtrace
 
 # dnf
-sudo dnf update
+sudo dnf -y update
 
 # flatpak
 ! which flatpak || flatpak update

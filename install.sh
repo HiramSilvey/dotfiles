@@ -9,10 +9,16 @@ set -o xtrace
 SCRIPT_DIRNAME=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 SCRIPT_BASENAME=$(basename $SCRIPT_DIRNAME)
 
-sudo dnf copr enable solopasha/hyprland
-sudo dnf copr enable azandure/clipse
+# dnf
+sudo dnf -y update
+
+sudo dnf copr enable -y solopasha/hyprland
+sudo dnf copr enable -y azandure/clipse
 
 sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse
+
+# flatpak
+! which flatpak || flatpak update
 
 # rust
 which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -47,14 +53,14 @@ sudo mv target/release/swww-daemon /usr/local/bin/swww-daemon
 
 # bun
 curl -fsSL https://bun.sh/install | bash && \
-  sudo ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
+  sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
 
 # HyprPanel
 [ -d $HOME/src/public/HyprPanel ] || git clone https://github.com/Jas-SinghFSU/HyprPanel.git $HOME/src/public/HyprPanel
 cd $HOME/src/public/HyprPanel
 git pull
 [ ! -d $HOME/.config/ags ] || mv -f $HOME/.config/ags $HOME/.config/ags.bkup
-ln -s $HOME/src/public/HyprPanel $HOME/.config/ags
+ln -sf $HOME/src/public/HyprPanel $HOME/.config/ags
 
 # emacs
 mkdir -p $HOME/src/public/apps
@@ -79,4 +85,4 @@ stow $SCRIPT_BASENAME -t ${HOME}/
 echo "To install dart-sass:
 1. Download and extract the latest release from https://github.com/sass/dart-sass/releases/
 2. sudo mv dart-sass /opt/
-3. sudo ln -s /opt/dart-sass/sass /usr/local/bin/sass"
+3. sudo ln -sf /opt/dart-sass/sass /usr/local/bin/sass"
