@@ -10,7 +10,7 @@ set -o xtrace
 sudo dnf -y update
 
 # flatpak
-! which flatpak || flatpak update
+! which flatpak || flatpak -y update
 
 # rust
 rustup update

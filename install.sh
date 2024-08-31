@@ -18,7 +18,7 @@ sudo dnf copr enable -y azandure/clipse
 sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse
 
 # flatpak
-! which flatpak || flatpak update
+! which flatpak || flatpak -y update
 
 # rust
 which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
