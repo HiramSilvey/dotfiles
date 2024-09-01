@@ -300,5 +300,6 @@
   "theme.bar.buttons.style": "default",
   "theme.bar.buttons.spacing": "0em",
   "theme.bar.floating": false,
-  "bar.workspaces.workspaces": 5
+  "bar.workspaces.workspaces": 5,
+  "menus.clock.weather.interval": 300000
 }
