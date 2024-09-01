@@ -15,7 +15,7 @@ sudo dnf -y update
 sudo dnf copr enable -y solopasha/hyprland
 sudo dnf copr enable -y azandure/clipse
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png
 
 # flatpak
 ! which flatpak || flatpak -y update
@@ -24,24 +24,16 @@ sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hypr
 which rustup || curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup update
 
+# go
+go install golang.org/x/tools/gopls@latest
+go install golang.org/x/tools/cmd/goimports@latest
+
 # zsh
 [ -d $HOME/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 [ -d $HOME/.oh-my-zsh/custom/themes/powerlevel10k ] || git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.oh-my-zsh/custom/themes/powerlevel10k
 [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 [ -d $HOME/.oh-my-zsh/custom/plugins/autoupdate ] || git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins $HOME/.oh-my-zsh/custom/plugins/autoupdate
-
-# go
-go install golang.org/x/tools/gopls@latest
-go install golang.org/x/tools/cmd/goimports@latest
-
-# hyprland contrib scratchpad
-[ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
-cd $HOME/src/public/contrib
-git pull
-cd scratchpad
-sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
-sudo make install
 
 # swww
 [ -d $HOME/src/public/swww ] || git clone https://github.com/LGFae/swww.git $HOME/src/public/swww
@@ -61,6 +53,21 @@ cd $HOME/src/public/HyprPanel
 git pull
 [ ! -d $HOME/.config/ags ] || mv -f $HOME/.config/ags $HOME/.config/ags.bkup
 ln -sf $HOME/src/public/HyprPanel $HOME/.config/ags
+
+# hyprland contrib scratchpad
+[ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
+cd $HOME/src/public/contrib
+git pull
+cd scratchpad
+sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
+sudo make install
+
+# nwg-look
+[ -d $HOME/src/public/nwg-look ] || git clone https://github.com/nwg-piotr/nwg-look.git $HOME/src/public/nwg-look
+cd $HOME/src/public/nwg-look
+git pull
+make build
+sudo make install
 
 # emacs
 mkdir -p $HOME/src/public/apps

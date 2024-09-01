@@ -46,6 +46,13 @@ cd scratchpad
 sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
 sudo make install
 
+# nwg-look
+[ -d $HOME/src/public/nwg-look ] || git clone https://github.com/nwg-piotr/nwg-look.git $HOME/src/public/nwg-look
+cd $HOME/src/public/nwg-look
+git pull
+make build
+sudo make install
+
 # emacs
 mkdir -p $HOME/src/public/apps
 [ -d $HOME/src/public/apps/emacs ] || git clone git://git.sv.gnu.org/emacs.git $HOME/src/public/apps/emacs
