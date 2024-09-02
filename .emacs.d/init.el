@@ -37,6 +37,7 @@
   (load "~/.emacs.d/utility.el")
   (load "~/.emacs.d/search.el")
   (load "~/.emacs.d/tools.el")
+  (load "~/.emacs.d/org.el")
 
   ;; Load local file configurations if present.
   (if (file-readable-p "~/.emacs.d/local.el")

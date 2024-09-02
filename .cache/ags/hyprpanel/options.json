@@ -288,7 +288,7 @@
   "menus.dashboard.shortcuts.left.shortcut4.command": "google-chrome-stable",
   "menus.dashboard.shortcuts.left.shortcut4.tooltip": "Chrome",
   "bar.media.show_label": true,
-  "bar.media.truncation": true,
+  "bar.media.truncation": false,
   "bar.media.show_artist": true,
   "bar.clock.icon": "󰸗",
   "bar.clock.showIcon": true,
@@ -301,5 +301,6 @@
   "theme.bar.buttons.spacing": "0em",
   "theme.bar.floating": false,
   "bar.workspaces.workspaces": 5,
-  "menus.clock.weather.interval": 300000
+  "menus.clock.weather.interval": 300000,
+  "bar.windowtitle.label": true
 }

@@ -63,7 +63,7 @@ git pull
 ./configure --without-compress-install --with-native-compilation --with-mailutils --with-pgtk --with-tree-sitter
 make -j $(nproc)
 sudo make install
-emacs --eval "(progn (all-the-icons-install-fonts t) (nerd-icons-install-fonts t) (kill-emacs))"
+emacs --eval "(progn (straight-pull-all) (straight-check-all) (kill-emacs))"
 fc-cache -fv
 
 echo "To update dart-sass:
