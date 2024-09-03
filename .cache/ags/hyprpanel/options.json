@@ -302,5 +302,45 @@
   "theme.bar.floating": false,
   "bar.workspaces.workspaces": 5,
   "menus.clock.weather.interval": 300000,
-  "bar.windowtitle.label": true
+  "bar.windowtitle.label": true,
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "clock",
+        "notifications"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "network",
+        "bluetooth",
+        "battery",
+        "systray",
+        "clock",
+        "notifications"
+      ]
+    }
+  }
 }
