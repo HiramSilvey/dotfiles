@@ -1,3 +1,5 @@
+.cache/ags/media/
+.cache/ags/notifications/
 .emacs.d/.last-package-update-day
 .emacs.d/.lsp*
 .emacs.d/agenda_files.txt
@@ -11,6 +13,7 @@
 .emacs.d/eshell/lastdir
 .emacs.d/history
 .emacs.d/local.el
+.emacs.d/org-roam.db
 .emacs.d/places
 .emacs.d/straight/
 .emacs.d/tramp
