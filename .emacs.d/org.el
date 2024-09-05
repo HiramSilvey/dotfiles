@@ -59,10 +59,24 @@
   :custom
   (org-roam-directory (file-truename "~/Documents/OrgRoam/"))
   (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n\n")
+      :unnarrowed t)
+     ("c" "component" plain
+      "%^{Summary}\n\nOwner: %^{Owner}\nPOCs: \nDocs: [[%^{Wiki URL}][Wiki]]\n\n%?"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n")
+      :unnarrowed t)
+     ("t" "team" plain
+      "%^{Summary}\n\n[[%^{Wiki URL}][Wiki]]\n\n%?"
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n")
+      :unnarrowed t)))
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
+         ("C-c n I" . org-roam-node-insert-immediate)
          ("C-c n c" . org-roam-capture)
          ;; Dailies
          ("C-c n j" . org-roam-dailies-capture-today)
@@ -77,6 +91,14 @@
     "Adds a hook to update the project tag iff the current file is an org roam node."
     (when (vulpea-buffer-p)
       (add-hook 'before-save-hook #'vulpea-project-update-tag nil t)))
+
+  ;; Source: https://systemcrafters.net/build-a-second-brain-in-emacs/5-org-roam-hacks/
+  (defun org-roam-node-insert-immediate (arg &rest args)
+  (interactive "P")
+  (let ((args (push arg args))
+        (org-roam-capture-templates (list (append (car org-roam-capture-templates)
+                                                  '(:immediate-finish t)))))
+    (apply #'org-roam-node-insert args)))
 
   ;; Source: https://gist.github.com/d12frosted/a60e8ccb9aceba031af243dff0d19b2e
   (defun vulpea-project-p ()
