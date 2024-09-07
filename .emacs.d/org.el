@@ -60,16 +60,16 @@
   (org-roam-directory (file-truename "~/Documents/OrgRoam/"))
   (org-roam-completion-everywhere t)
   (org-roam-capture-templates
-   '(("d" "default" plain
+   '(("m" "topic (miscellaneous)" plain
       "%?"
-      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n\n")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n")
       :unnarrowed t)
      ("c" "component" plain
-      "%^{Summary}\n\nOwner: %^{Owner}\nPOCs: \nDocs: [[%^{Wiki URL}][Wiki]]\n\n%?"
+      "%^{Summary}\n\nOwner: %^{Owner}\nDocs: [[%^{Wiki URL}][Wiki]]%?"
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n")
       :unnarrowed t)
      ("t" "team" plain
-      "%^{Summary}\n\n[[%^{Wiki URL}][Wiki]]\n\n%?"
+      "[[%^{Wiki URL}][Wiki]]%?"
       :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+category: ${title}\n")
       :unnarrowed t)))
   :bind (("C-c n l" . org-roam-buffer-toggle)
