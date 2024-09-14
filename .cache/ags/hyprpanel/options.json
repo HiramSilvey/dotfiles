@@ -294,7 +294,7 @@
   "bar.clock.showIcon": true,
   "bar.clock.showTime": true,
   "theme.bar.menus.opacity": 90,
-  "theme.bar.opacity": 50,
+  "theme.bar.opacity": 90,
   "theme.bar.buttons.opacity": 100,
   "theme.bar.buttons.background_opacity": 0,
   "theme.bar.buttons.style": "default",
