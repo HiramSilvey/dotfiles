@@ -342,5 +342,8 @@
         "notifications"
       ]
     }
-  }
+  },
+  "bar.customModules.updates.pollingInterval": 1440000,
+  "theme.notification.opacity": 90,
+  "theme.osd.opacity": 90
 }
