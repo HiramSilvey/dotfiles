@@ -15,7 +15,7 @@ sudo dnf -y update
 sudo dnf copr enable -y solopasha/hyprland
 sudo dnf copr enable -y azandure/clipse
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png the_silver_searcher ripgrep
 
 # flatpak
 ! which flatpak || flatpak -y update

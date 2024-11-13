@@ -4,9 +4,7 @@
 
 ;; Jump to visible text!
 (use-package avy
-  :bind (("C-c c" . avy-goto-char)
-         ("C-c w" . avy-goto-word-1)
-         ("C-c C-j" . avy-resume))
+  :bind ("C-c j" . avy-goto-word-1)
   :config (avy-setup-default))
 
 ;; Cosulting completing-read. Slightly modified from the example configuration.
