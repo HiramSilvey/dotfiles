@@ -110,12 +110,8 @@
   :init (undo-fu-session-global-mode)
   :custom (undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
-(use-package yasnippet
-  :init (yas-global-mode 1)
-  :bind ("M-<ret>" . yas-expand)
-  :config
-  (which-key-add-key-based-replacements "C-c &" "yasnippet"))
-(use-package yasnippet-snippets)
+;; Writable grep buffers!
+(use-package wgrep)
 
 (use-package emacs
   :init
