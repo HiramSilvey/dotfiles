@@ -6,6 +6,8 @@
 (use-package which-key
   :init (which-key-mode))
 
+(use-package keycast)
+
 (use-package emacs
   :bind (("C-c /" . comment-or-uncomment-region)
          ("C-c q" . kill-buffer-and-window)
