@@ -14,8 +14,9 @@ sudo dnf -y update
 
 sudo dnf copr enable -y solopasha/hyprland
 sudo dnf copr enable -y azandure/clipse
+sudo dnf copr enable erikreider/SwayNotificationCenter
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar dolphin firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png the_silver_searcher ripgrep
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png the_silver_searcher ripgrep hyprpolkitagent xwaylandvideobridge SwayNotificationCenter
 
 # flatpak
 ! which flatpak || flatpak -y update
@@ -46,13 +47,6 @@ sudo mv target/release/swww-daemon /usr/local/bin/swww-daemon
 # bun
 curl -fsSL https://bun.sh/install | bash && \
   sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
-
-# HyprPanel
-[ -d $HOME/src/public/HyprPanel ] || git clone https://github.com/Jas-SinghFSU/HyprPanel.git $HOME/src/public/HyprPanel
-cd $HOME/src/public/HyprPanel
-git pull
-[ ! -d $HOME/.config/ags ] || mv -f $HOME/.config/ags $HOME/.config/ags.bkup
-ln -sf $HOME/src/public/HyprPanel $HOME/.config/ags
 
 # hyprland contrib scratchpad
 [ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib

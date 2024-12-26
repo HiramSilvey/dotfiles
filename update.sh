@@ -69,17 +69,6 @@ echo_fill "BUN"
 curl -fsSL https://bun.sh/install | bash && \
   sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
 
-# HyprPanel
-echo_fill "HYPRPANEL"
-[ -d $HOME/src/public/HyprPanel ] || git clone https://github.com/Jas-SinghFSU/HyprPanel.git $HOME/src/public/HyprPanel
-cd $HOME/src/public/HyprPanel
-git fetch
-if [ $(git rev-parse @) != $(git rev-parse @{u}) ]; then
-    git pull
-    [ ! -d $HOME/.config/ags ] || mv -f $HOME/.config/ags $HOME/.config/ags.bkup
-    ln -sf $HOME/src/public/HyprPanel $HOME/.config/ags
-fi
-
 # hyprland contrib scratchpad
 echo_fill "HYPRLAND SCRATCHPAD"
 [ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
