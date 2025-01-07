@@ -110,8 +110,3 @@ if [ $skip_emacs = false ]; then
         fc-cache -fv
     fi
 fi
-
-echo "To update dart-sass:
-1. Download and extract the latest release from https://github.com/sass/dart-sass/releases/
-2. sudo mv dart-sass /opt/
-3. sudo ln -sf /opt/dart-sass/sass /usr/local/bin/sass"
