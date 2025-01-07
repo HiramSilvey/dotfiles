@@ -1,7 +1,7 @@
 {
   "layer": "top",
   "modules-left": ["tray", "mpd"],
-  "modules-center": ["clock"],
+  "modules-center": ["clock", "clock#date", "clock#utc"],
   "modules-right": ["hyprland/language","pulseaudio","network","cpu","memory","power-profiles-daemon", "battery"],
   "start_hidden": true,
   "tray": {
@@ -34,9 +34,16 @@
     "tooltip-format-disconnected": "MPD (disconnected)"
   },
   "clock": {
-    "interval": 1,
-    "format": "{:%T}",
-    "format-alt": "{:%F}",
+    "format": "{:%R}",
+    "tooltip": false
+  },
+  "clock#date": {
+    "format": "{:%F}",
+    "tooltip": false
+  },
+  "clock#utc": {
+    "format": "{:%R}",
+    "timezone": "Etc/UTC",
     "tooltip": false
   },
   "hyprland/language": {
