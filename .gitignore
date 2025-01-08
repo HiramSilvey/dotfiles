@@ -15,7 +15,9 @@
 .emacs.d/history
 .emacs.d/local.el
 .emacs.d/org-roam.db
+.emacs.d/package-lock.json
 .emacs.d/places
+.emacs.d/projects
 .emacs.d/straight/
 .emacs.d/tramp
 .emacs.d/transient/
