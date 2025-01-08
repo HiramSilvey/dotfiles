@@ -2,7 +2,7 @@
   "layer": "top",
   "modules-left": ["tray", "mpd"],
   "modules-center": ["clock", "clock#date", "clock#utc"],
-  "modules-right": ["hyprland/language","pulseaudio","network","cpu","memory","power-profiles-daemon", "battery"],
+  "modules-right": ["hyprland/language", "pulseaudio", "power-profiles-daemon", "battery"],
   "start_hidden": true,
   "tray": {
     "spacing": 10
@@ -67,22 +67,6 @@
       "default": ["", "", ""]
     },
     "on-click": "pavucontrol"
-  },
-  "network": {
-    // "interface": "wlp2*", // (Optional) To force the use of this interface
-    "format-wifi": "{essid} ({signalStrength}%) ",
-    "format-ethernet": "{ipaddr}/{cidr} ",
-    "tooltip-format": "{ifname} via {gwaddr} ",
-    "format-linked": "{ifname} (No IP) ",
-    "format-disconnected": "Disconnected ⚠",
-    "format-alt": "{ifname}: {ipaddr}/{cidr}"
-  },
-  "cpu": {
-    "format": "{usage}% ",
-    "tooltip": false
-  },
-  "memory": {
-    "format": "{}% "
   },
   "battery": {
     "format": "{capacity}% {icon}",
