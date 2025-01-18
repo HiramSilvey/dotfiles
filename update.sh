@@ -106,7 +106,7 @@ if [ $skip_emacs = false ]; then
         ./configure --without-compress-install --with-native-compilation --with-mailutils --with-pgtk --with-tree-sitter
         make -j $(nproc)
         sudo make install
-        emacs --eval "(progn (straight-pull-all) (straight-check-all) (kill-emacs))"
+        emacs --eval "(progn (straight-pull-all) (straight-check-all) (copilot-reinstall-server) (kill-emacs))"
         fc-cache -fv
     fi
 fi

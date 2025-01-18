@@ -19,12 +19,12 @@
 (use-package copilot
   :hook (prog-mode . copilot-mode)
   :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-p" . 'copilot-previous-completion)
-              ("C-n" . 'copilot-next-completion))
+              ("C-<tab>" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion)
+              ("C-<S-tab>" . 'copilot-accept-completion-by-line)
+              ("C-<iso-lefttab>" . 'copilot-accept-completion-by-line))
+              ;; ("C-p" . 'copilot-previous-completion)
+              ;; ("C-n" . 'copilot-next-completion)
   :config
   (add-to-list 'copilot-indentation-alist '(prog-mode . 2))
   (add-to-list 'copilot-indentation-alist '(org-mode . 2))
@@ -34,7 +34,10 @@
 ;; Completion in region function.
 (use-package corfu
   ; Free the RET key for less intrusive behavior.
-  :bind (:map corfu-map ("RET" . nil))
+  :bind (:map corfu-map
+              ("RET" . nil)
+              ("C-n" . nil)
+              ("C-p" . nil))
   :init
   (global-corfu-mode)
   :custom
