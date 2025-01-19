@@ -23,13 +23,16 @@
               ("C-TAB" . 'copilot-accept-completion)
               ("C-<S-tab>" . 'copilot-accept-completion-by-line)
               ("C-<iso-lefttab>" . 'copilot-accept-completion-by-line))
-              ;; ("C-p" . 'copilot-previous-completion)
-              ;; ("C-n" . 'copilot-next-completion)
   :config
   (add-to-list 'copilot-indentation-alist '(prog-mode . 2))
   (add-to-list 'copilot-indentation-alist '(org-mode . 2))
   (add-to-list 'copilot-indentation-alist '(text-mode . 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 2)))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 2))
+
+  (defun hs/copilot-toggle-overlay ()
+    "Toggle the copilot overlay."
+    (interactive)
+    (setq copilot-idle-delay (if (eq copilot-idle-delay 0) nil 0))))
 
 ;; Completion in region function.
 (use-package corfu
