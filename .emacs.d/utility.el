@@ -24,10 +24,10 @@
               ("C-<S-tab>" . 'copilot-accept-completion-by-line)
               ("C-<iso-lefttab>" . 'copilot-accept-completion-by-line))
   :config
-  (add-to-list 'copilot-indentation-alist '(prog-mode . 2))
-  (add-to-list 'copilot-indentation-alist '(org-mode . 2))
-  (add-to-list 'copilot-indentation-alist '(text-mode . 2))
-  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode . 2))
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(emacs-lisp-mode 2))
 
   (defun hs/copilot-toggle-overlay ()
     "Toggle the copilot overlay."
