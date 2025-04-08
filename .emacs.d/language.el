@@ -56,6 +56,9 @@
         ((staticcheck . t)
          (matcher . "CaseSensitive"))))))
 
+(use-package gdscript-mode
+  :hook (gdscript-mode . (lambda() (add-hook 'before-save-hook 'gdscript-format nil 'local))))
+
 (use-package emacs
   :init
   ;; 1. Bind "C-c z" to swap between C/C++ source and header files.
