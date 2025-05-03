@@ -4,9 +4,9 @@
 
 ;; Org mode!
 (use-package org
-  :init (which-key-add-key-based-replacements "C-c o" "org")
-  :bind (("C-c o a" . org-agenda)
-         ("C-c o t" . org-todo-list))
+  :init (which-key-add-key-based-replacements "C-c n" "org")
+  :bind (("C-c n a" . org-agenda)
+         ("C-c n t" . org-todo-list))
   :hook (org-mode . visual-line-mode)  ;; Wrap lines visually.
   :custom
   (org-todo-keywords '((sequence "TODO(t)" "|" "DONE(D)" "CANCELED(x@)")))
