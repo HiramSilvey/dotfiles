@@ -4,7 +4,7 @@
 
 ;; Jump to visible text!
 (use-package avy
-  :bind ("C-M-s-a" . avy-goto-char-2)
+  :bind ("C-M-s-j" . avy-goto-char)
   :config (avy-setup-default))
 
 ;; Cosulting completing-read. Slightly modified from the example configuration.
