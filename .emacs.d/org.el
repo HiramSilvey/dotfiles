@@ -22,7 +22,7 @@
   (org-priority-faces
    '((?A . '(org-priority))
      (?B . '(:foreground "dark orange"))
-     (?C . '(shadow))
+     (?C . '(:foreground "steel blue"))
      (?D . '(shadow)))
    "Differentiate priorities visually.")
   ;; Replace list hyphen with bullet visually.
