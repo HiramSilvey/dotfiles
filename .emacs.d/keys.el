@@ -13,6 +13,8 @@
          ("C-c k o" . clean-buffer-list)
          ("C-c r" . eglot-rename)
          ("C-c c" . hs/copilot-toggle-overlay)
+         ("C-c e p" . flymake-goto-prev-error)
+         ("C-c e n" . flymake-goto-next-error)
          ("C-M-s-p" . windmove-up)
          ("C-M-s-n" . windmove-down)
          ("C-M-s-b" . windmove-left)
