@@ -51,6 +51,21 @@
 (use-package capf-autosuggest
   :hook ((comint-mode eshell-mode) . capf-autosuggest-mode))
 
+;; Emulate a terminal; used for visual commands in eshell.
+(use-package eat
+  :straight
+  (eat :type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+               "*.ti" ("terminfo/e" "terminfo/e/*")
+               ("terminfo/65" "terminfo/65/*")
+               ("integration" "integration/*")
+               (:exclude ".dir-locals.el" "*-tests.el")))
+  :config
+  (eat-eshell-mode)
+  (eat-eshell-visual-command-mode))
+
 ;; Blazingly fast terminal emulator.
 (use-package vterm
   :bind ("C-c k t" . hs/killall-vterm)

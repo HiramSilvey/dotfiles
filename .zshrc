@@ -145,6 +145,10 @@ fi
 # various symbols.
 add-zsh-hook -Uz chpwd (){ print -Pn "\e]2;%m:%2~\a" }
 
+# eat shell integration
+[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+  source "$EAT_SHELL_INTEGRATION_DIR/zsh"
+
 # Sync directory and host in the shell with Emacs's current directory.
 #
 # The escape sequence "51;A" has also the role of identifying the end of the
