@@ -2,9 +2,78 @@
     (
         modifiers: [
             Super,
+            Ctrl,
+        ],
+        key: "j",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
             Shift,
         ],
+        key: "f",
+    ): Move(Right),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "n",
+    ): Move(Down),
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+            Shift,
+        ],
+        key: "h",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "r",
+    ): System(Launcher),
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+            Shift,
+        ],
+        key: "j",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
         key: "Escape",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "r",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "t",
+    ): System(Terminal),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "q",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+        ],
+        key: "h",
     ): Disable,
     (
         modifiers: [
@@ -12,6 +81,120 @@
             Ctrl,
         ],
         key: "k",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+        ],
+        key: "l",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "Escape",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "e",
+        description: Some("Open Emacs"),
+    ): Spawn("emacsclient --create-frame --alternate-editor \"\""),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "b",
+    ): Move(Left),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "w",
+    ): System(WebBrowser),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "l",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+            Shift,
+        ],
+        key: "n",
+    ): MoveToNextWorkspace,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "Next",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+        ],
+        key: "p",
+    ): PreviousWorkspace,
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+            Shift,
+        ],
+        key: "b",
+    ): MoveToPreviousWorkspace,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "f",
+    ): Focus(Right),
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "p",
+    ): Move(Up),
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "k",
+    ): Close,
+    (
+        modifiers: [
+            Super,
+        ],
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+        ],
+        key: "b",
+    ): PreviousWorkspace,
+    (
+        modifiers: [
+            Super,
+            Shift,
+        ],
+        key: "j",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "h",
     ): Disable,
     (
         modifiers: [
@@ -24,58 +207,14 @@
         modifiers: [
             Super,
         ],
-        key: "f",
-    ): Focus(Right),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "b",
-    ): Move(Left),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "j",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "p",
-    ): Move(Up),
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-            Shift,
-        ],
-        key: "f",
-    ): MoveToNextWorkspace,
+        key: "n",
+    ): Focus(Down),
     (
         modifiers: [
             Super,
         ],
-        key: "w",
-    ): System(WebBrowser),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "h",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-            Shift,
-        ],
-        key: "h",
-    ): Disable,
+        key: "t",
+    ): Spawn("emacsclient --create-frame --alternate-editor \"\" --eval \"(hs/eshell-new)\""),
     (
         modifiers: [
             Super,
@@ -86,7 +225,13 @@
     (
         modifiers: [
             Super,
-            Ctrl,
+        ],
+        key: "slash",
+    ): Disable,
+    (
+        modifiers: [
+            Super,
+            Shift,
         ],
         key: "h",
     ): Disable,
@@ -101,57 +246,50 @@
     (
         modifiers: [
             Super,
-            Ctrl,
             Shift,
         ],
-        key: "j",
-    ): Disable,
+        key: "k",
+    ): System(LogOut),
     (
         modifiers: [
             Super,
-        ],
-        key: "q",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
         ],
         key: "p",
-    ): PreviousWorkspace,
+    ): Focus(Up),
     (
         modifiers: [
             Super,
+            Ctrl,
             Shift,
         ],
-        key: "n",
-    ): Move(Down),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "slash",
+        key: "l",
     ): Disable,
     (
         modifiers: [
             Super,
+            Ctrl,
             Shift,
         ],
         key: "f",
-    ): Move(Right),
+    ): MoveToNextWorkspace,
     (
         modifiers: [
             Super,
-            Ctrl,
-        ],
-        key: "b",
-    ): PreviousWorkspace,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
         ],
         key: "l",
+    ): System(LockScreen),
+    (
+        modifiers: [
+            Super,
+            Ctrl,
+        ],
+        key: "n",
+    ): NextWorkspace,
+    (
+        modifiers: [
+            Super,
+        ],
+        key: "j",
     ): Disable,
     (
         modifiers: [
@@ -165,138 +303,6 @@
             Ctrl,
             Shift,
         ],
-        key: "b",
-    ): MoveToPreviousWorkspace,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-        ],
-        key: "j",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "p",
-    ): Focus(Up),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "r",
-    ): System(Launcher),
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-            Shift,
-        ],
-        key: "l",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "t",
-    ): Spawn("emacsclient --create-frame --alternate-editor \"\" --eval \"(hs/eshell-new)\""),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "e",
-        description: Some("Open Emacs"),
-    ): Spawn("emacsclient --create-frame --alternate-editor \"\""),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "h",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "Escape",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "l",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "k",
-    ): Close,
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "k",
-    ): System(LogOut),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "l",
-    ): System(LockScreen),
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "t",
-    ): System(Terminal),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "n",
-    ): Focus(Down),
-    (
-        modifiers: [
-            Super,
-        ],
-        key: "j",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Shift,
-        ],
-        key: "r",
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-            Shift,
-        ],
-        key: "n",
-    ): MoveToNextWorkspace,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-            Shift,
-        ],
         key: "p",
     ): MoveToPreviousWorkspace,
-    (
-        modifiers: [
-            Super,
-        ],
-    ): Disable,
-    (
-        modifiers: [
-            Super,
-            Ctrl,
-        ],
-        key: "n",
-    ): NextWorkspace,
 }
