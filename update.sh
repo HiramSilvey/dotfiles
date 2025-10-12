@@ -53,33 +53,33 @@ go install golang.org/x/tools/gopls@latest
 go install golang.org/x/tools/cmd/goimports@latest
 
 # swww
-echo_fill "SWWW"
-[ -d $HOME/src/public/swww ] || git clone https://github.com/LGFae/swww.git $HOME/src/public/swww
-cd $HOME/src/public/swww
-git fetch
-if [ $(git rev-parse @) != $(git rev-parse @{u}) ]; then
-    git pull
-    cargo build --release
-    sudo mv target/release/swww /usr/local/bin/swww
-    sudo mv target/release/swww-daemon /usr/local/bin/swww-daemon
-fi
+# echo_fill "SWWW"
+# [ -d $HOME/src/public/swww ] || git clone https://github.com/LGFae/swww.git $HOME/src/public/swww
+# cd $HOME/src/public/swww
+# git fetch
+# if [ $(git rev-parse @) != $(git rev-parse @{u}) ]; then
+#     git pull
+#     cargo build --release
+#     sudo mv target/release/swww /usr/local/bin/swww
+#     sudo mv target/release/swww-daemon /usr/local/bin/swww-daemon
+# fi
 
 # bun
-echo_fill "BUN"
-curl -fsSL https://bun.sh/install | bash && \
-  sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
+# echo_fill "BUN"
+# curl -fsSL https://bun.sh/install | bash && \
+#   sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
 
 # hyprland contrib scratchpad
-echo_fill "HYPRLAND SCRATCHPAD"
-[ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
-cd $HOME/src/public/contrib
-git fetch
-if [ $(git rev-parse @) != $(git rev-parse @{u}) ]; then
-    git pull
-    cd scratchpad
-    sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
-    sudo make install
-fi
+# echo_fill "HYPRLAND SCRATCHPAD"
+# [ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
+# cd $HOME/src/public/contrib
+# git fetch
+# if [ $(git rev-parse @) != $(git rev-parse @{u}) ]; then
+#     git pull
+#     cd scratchpad
+#     sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
+#     sudo make install
+# fi
 
 # nwg-look
 echo_fill "NWG-LOOK"
