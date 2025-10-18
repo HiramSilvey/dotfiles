@@ -16,7 +16,7 @@ sudo dnf copr enable -y solopasha/hyprland
 sudo dnf copr enable -y azandure/clipse
 sudo dnf copr enable erikreider/SwayNotificationCenter
 
-sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png the_silver_searcher ripgrep hyprpolkitagent xwaylandvideobridge SwayNotificationCenter
+sudo dnf install -y hyprland hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland qt5-qtwayland qt6-qtwayland pipewire wireplumber waybar firefox pavucontrol socat zsh stow curl git go cmake libtool libvterm grim slurp fuzzel qt6ct kvantum plasma-breeze-qt6 lz4-devel btop bluez hyprpicker NetworkManager wl-clipboard brightnessctl aylurs-gtk-shell clipse xcur2png the_silver_searcher ripgrep hyprpolkitagent xwaylandvideobridge SwayNotificationCenter meson pulseaudio-libs-devel
 
 # flatpak
 ! which flatpak || flatpak -y update
@@ -36,25 +36,13 @@ go install golang.org/x/tools/cmd/goimports@latest
 [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 [ -d $HOME/.oh-my-zsh/custom/plugins/autoupdate ] || git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins $HOME/.oh-my-zsh/custom/plugins/autoupdate
 
-# swww
-[ -d $HOME/src/public/swww ] || git clone https://github.com/LGFae/swww.git $HOME/src/public/swww
-cd $HOME/src/public/swww
+# SwayAudioIdleInhibit
+[ -d $HOME/src/public/SwayAudioIdleInhibit ] || git clone https://github.com/ErikReider/SwayAudioIdleInhibit.git $HOME/src/public/SwayAudioIdleInhibit
+cd $HOME/src/public/SwayAudioIdleInhibit
 git pull
-cargo build --release
-sudo mv target/release/swww /usr/local/bin/swww
-sudo mv target/release/swww-daemon /usr/local/bin/swww-daemon
-
-# bun
-curl -fsSL https://bun.sh/install | bash && \
-  sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
-
-# hyprland contrib scratchpad
-[ -d $HOME/src/public/contrib ] || git clone https://github.com/hyprwm/contrib.git $HOME/src/public/contrib
-cd $HOME/src/public/contrib
-git pull
-cd scratchpad
-sed -i s/"_menu_cmd=.*"/"_menu_cmd=\"fuzzel --dmenu -p scratchpad\""/g scratchpad
-sudo make install
+meson setup build -Dlogind-provider=systemd
+meson compile -C build
+sudo meson install -C build
 
 # nwg-look
 [ -d $HOME/src/public/nwg-look ] || git clone https://github.com/nwg-piotr/nwg-look.git $HOME/src/public/nwg-look
