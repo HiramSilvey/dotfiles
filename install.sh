@@ -36,14 +36,6 @@ go install golang.org/x/tools/cmd/goimports@latest
 [ -d $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions ] || git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 [ -d $HOME/.oh-my-zsh/custom/plugins/autoupdate ] || git clone https://github.com/TamCore/autoupdate-oh-my-zsh-plugins $HOME/.oh-my-zsh/custom/plugins/autoupdate
 
-# SwayAudioIdleInhibit
-[ -d $HOME/src/public/SwayAudioIdleInhibit ] || git clone https://github.com/ErikReider/SwayAudioIdleInhibit.git $HOME/src/public/SwayAudioIdleInhibit
-cd $HOME/src/public/SwayAudioIdleInhibit
-git pull
-meson setup build -Dlogind-provider=systemd
-meson compile -C build
-sudo meson install -C build
-
 # nwg-look
 [ -d $HOME/src/public/nwg-look ] || git clone https://github.com/nwg-piotr/nwg-look.git $HOME/src/public/nwg-look
 cd $HOME/src/public/nwg-look
