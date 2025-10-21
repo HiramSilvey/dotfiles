@@ -2,7 +2,7 @@
   "layer": "top",
   "modules-left": ["tray", "mpd"],
   "modules-center": ["clock", "clock#date", "clock#utc"],
-  "modules-right": ["hyprland/language", "pulseaudio", "power-profiles-daemon", "battery"],
+  "modules-right": ["hyprland/language", "pulseaudio", "power-profiles-daemon", "battery", "custom/scale-toggle"],
   "start_hidden": true,
   "tray": {
     "spacing": 10
@@ -82,5 +82,9 @@
       "balanced": "",
       "power-saver": ""
     }
+  },
+  "custom/scale-toggle": {
+    "format": " ⮁ ",
+    "on-click": "(swaymsg -t get_outputs | grep -q \"1\\.5\" && swaymsg \"output * scale 1\") || swaymsg \"output * scale 1.5\"",
   }
 }
